@@ -1,0 +1,6 @@
+#!chuck_extends requirements/requirements.txt
+
+#!chuck_appends REQUIREMENTS
+django-modeltranslation==0.3.2
+django-rosetta==0.6.2
+#!end

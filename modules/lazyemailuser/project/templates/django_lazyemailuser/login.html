@@ -1,0 +1,36 @@
+{% extends "subsite.html" %}
+{% load i18n %}
+
+
+{% block content %}
+
+    <h2>{% trans "Anmelden" %}</h2>
+    <p>{% trans "Melden Sie sich mit Ihrer E-Mail-Adresse und Ihrem Passwort an." %}</p>
+
+    <form method="post" action="">
+      {% if form.errors.login %}
+        <ul class="errorlist"><li>{{ form.errors.login }}</li></ul>
+      {% endif %}
+
+        <div>
+            {% if form.email.errors %}{{ form.email.errors }}{% endif %}
+            <label for="id_email">{% trans "E-Mail:" %}</label> {{ form.email }}
+        </div>
+
+        <div>
+            {% if form.password.errors %}{{ form.password.errors }}{% endif %}
+            <label for="id_password">{% trans "Passwort:" %}</label> {{ form.password }}
+        </div>
+
+        <div class="clearfix">
+            <span class="submit-button"><input type="submit" value="{% trans "Anmelden" %}" /></span> <a class="forgot-password-btn" href="{% url password_reset %}">{% trans "Passwort vergessen?" %}</a>
+        </div>
+    </form>
+
+    <h3>{% trans "Sie haben noch keine Login-Daten?" %}</h3>
+    <p>{% trans "Dann melden Sie sich jetzt an. Sobald Sie sich registriert haben, können Sie alle Geschenklisten kostenlos speichern und bei späteren Besuchen abrufen. Zudem erscheint nach dem Anmelden automatisch das Formular für die Teilnahme am Wettbewerb, bei dem Sie jede Woche eine Manor Geschenkkarte im Wert von CHF 250.– gewinnen können." %}</p>
+    <p>
+        <a class="button" href="{% url lazysignup_convert %}"><span>{% trans "Zur Registration" %}</span></a>
+    </p>
+
+{% endblock %}

@@ -1,0 +1,164 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Available modules &mdash; Django Chuck 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django Chuck 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Django Chuck 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="available-modules">
+<h1>Available modules<a class="headerlink" href="#available-modules" title="Permalink to this headline">¶</a></h1>
+<p>A brief description of all modules included in Django Chuck.</p>
+<p>Please note that this is only a minimum set of modules for the most basic tasks. More apps are available through <a class="reference internal" href="#additional-module-repositories">additional module repositories</a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="39%" />
+<col width="61%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Module</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>apache</td>
+<td>Generates virtualhost for <a class="reference external" href="http://httpd.apache.org">Apache</a> and a <a class="reference external" href="http://code.google.com/p/modwsgi/">mod_wsgi</a> config</td>
+</tr>
+<tr class="row-odd"><td>cms</td>
+<td>Installs <a class="reference external" href="http://www.django-cms">django-cms</a> and filer apps</td>
+</tr>
+<tr class="row-even"><td>contact</td>
+<td>A simple contact form app</td>
+</tr>
+<tr class="row-odd"><td>core</td>
+<td>Installs Django an the basic project structure</td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="https://github.com/django-extensions/django-extensions">django-extensions</a></td>
+<td>Common Django extensions like shell`plus</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="http://pypi.python.org/pypi/django-debug-toolbar/">django-debug-toolbar</a></td>
+<td>The Django debug toolbar</td>
+</tr>
+<tr class="row-even"><td>jenkins</td>
+<td>Plug and play integration with the <a class="reference external" href="http://www.jenkins-ci.org">Jenkins Coninuous Integration</a> server</td>
+</tr>
+<tr class="row-odd"><td>mysql</td>
+<td><a class="reference external" href="http://www.mysql.com">MySQL</a> database settings</td>
+</tr>
+<tr class="row-even"><td>nginx</td>
+<td>Generates <a class="reference external" href="http://www.nginx.org">NGiNX</a> virtualhost config</td>
+</tr>
+<tr class="row-odd"><td>oracle</td>
+<td><a class="reference external" href="http://www.oracle.com">Oracle</a> database settings</td>
+</tr>
+<tr class="row-even"><td>postgres</td>
+<td><a class="reference external" href="http://www.postgresql.org">PostgreSQL</a> database settings</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="http://south.aeracode.org/">south</a></td>
+<td>The defacto standard for database migrations</td>
+</tr>
+<tr class="row-even"><td>unittest</td>
+<td>Some wicked, cool unit testing tools</td>
+</tr>
+<tr class="row-odd"><td>uwsgi</td>
+<td>Generates a config and app file for your <a class="reference external" href="http://projects.unbit.it/uwsgi/">uWSGI</a> deployment</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="additional-module-repositories">
+<h1>Additional module repositories<a class="headerlink" href="#additional-module-repositories" title="Permalink to this headline">¶</a></h1>
+<p>Currently their is only the extra repository from <a class="reference external" href="http://www.notch-interactive.com">Notch Interactive</a> available on <a class="reference external" href="http://github.com/notch-interactive/chuck-modules">Github</a>.
+Feel free to send an email to <a class="reference external" href="mailto:chuck&#37;&#52;&#48;notch-interactive&#46;com">chuck<span>&#64;</span>notch-interactive<span>&#46;</span>com</a> if you want to add your module repository to this list.</p>
+<p>To add another module repository to Django Chuck you have to download it to a local folder and define the <tt class="docutils literal"><span class="pre">module_basedirs</span></tt> variable in your config file <tt class="docutils literal"><span class="pre">~/.django_chuck.conf</span></tt>.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">module_basedirs</span><span class="o">=</span><span class="s2">&quot;/some/dir/to/additionial-modules&quot;</span>,<span class="s2">&quot;.&quot;</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Available modules</a></li>
+<li><a class="reference internal" href="#additional-module-repositories">Additional module repositories</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/getting_started/available_modules.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Django Chuck 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Notch Interactive GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

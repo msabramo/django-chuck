@@ -1,0 +1,29 @@
+#!chuck_extends project/templates/base.html
+
+#!chuck_appends TAGS
+{% load compress %}
+#!end
+
+#!chuck_prepends CSS
+{% compress css %}
+#!end
+
+#!chuck_appends CSS
+{% endcompress %}
+#!end
+
+#!chuck_prepends JS_HEAD
+{% compress js %}
+#!end
+
+#!chuck_appends JS_HEAD
+{% endcompress %}
+#!end
+
+#!chuck_prepends JS
+{% compress js %}
+#!end
+
+#!chuck_appends JS
+{% endcompress %}
+#!end

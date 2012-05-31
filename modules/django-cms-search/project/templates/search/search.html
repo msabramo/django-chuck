@@ -1,0 +1,38 @@
+{% extends "subsite.html" %}
+{% load result_tags highlight %}
+
+{% block content %}
+<h1>Search</h1>
+
+    <form id="main-search" method="get" action="">
+
+        <div id="main-form-head" class="clearfix">
+            {{ form.as_p }}
+            <input class="button" type="submit" value="Search">
+        </div>
+
+        {% if query %}
+            {% for result in page.object_list %}
+            <div class="result-box clearfix">
+                    <h3><a href="{% url search_result_click query result.object.get_path %}">{{ result.object }}</a></h3>
+                    <p>{% highlight result.text with query max_length 300 html_tag "span" css_class "highlight" %}</p>
+                            <ul class="breadcrumb clearfix">
+                                {% show_breadcrumb result.object.get_absolute_url %}
+                                    <li>
+                                        &nbsp;&raquo;&nbsp;<a href="{% url search_result_click query result.object.get_path %}">{{ result.object }}</a>
+                                    </li>
+                            </ul>
+            </div>
+            {% empty %}
+                <p class="no-results">No results found.</p>
+            {% endfor %}
+
+            {% if page.has_previous or page.has_next %}
+                <ul class="page-select">
+                    <li>{% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}</li>
+                    <li>{% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}</li>
+                </ul>
+            {% endif %}
+        {% endif %}
+    </form>
+{% endblock %}

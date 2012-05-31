@@ -1,0 +1,5 @@
+#!chuck_extends requirements/requirements_local.txt
+
+#!chuck_appends REQUIREMENTS
+django-debug-toolbar
+#!end

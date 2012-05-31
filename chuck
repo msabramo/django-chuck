@@ -1,0 +1,101 @@
+#!/usr/bin/env python
+#
+# _____  __                            ______ __                __
+# |     \|__|.---.-.-----.-----.-----. |      |  |--.--.--.----.|  |--.
+# |  --  |  ||  _  |     |  _  |  _  | |   ---|     |  |  |  __||    <
+# |_____/|  ||___._|__|__|___  |_____| |______|__|__|_____|____||__|__|
+#       |___|            |_____|
+#
+
+###[ Import modules ]###
+
+import re
+import os
+import sys
+import argparse
+from random import choice
+from django_chuck.utils import find_commands, autoload_commands, find_chuck_module_path
+
+
+###[ Configuration ]###
+
+parser = argparse.ArgumentParser()
+subparsers = parser.add_subparsers()
+conf_file = os.path.join(os.path.expanduser('~'), "django_chuck_conf.py")
+cfg = {
+    "use_virtualenvwrapper": False,
+    "site_basedir": os.path.join(os.getcwd(), "site_dir"),
+    "project_basedir": os.path.join(os.getcwd(), "project_dir"),
+    "virtualenv_basedir": os.path.join(os.getcwd(), "virtualenv_dir"),
+    "module_basedir": find_chuck_module_path(),
+}
+
+msgs = [
+    "The roundhouse kick for project management",
+    "For those who took the red pill.",
+    "For f*cking BIG times!",
+    "Wishes you an awesome, wicked day.",
+    "Build, clone and conquer!",
+    "Digital at heart",
+    "From cyber with love",
+
+    "Chuck Norris wore sunglasses to protect the sun from his intense gaze",
+    "Ghosts sit around the campfire and tell Chuck Norris stories.",
+    "There used to be a street named after Chuck Norris, but it was changed because nobody crosses Chuck Norris and lives.",
+    "Chuck Norris counted to infinity - twice.",
+    "Chuck Norris does not use spell check. His spelling checks itself.",
+    "Chuck Norris has already been to Mars; that's why there are no signs of life there.",
+    "I don't step on toes, LittleJohn, I step on necks!",
+    "Chuck Norris can unit test an entire application with a single assert.",
+    "Project managers never ask Chuck Norris for estimations... ever.",
+    "Chuck Norris doesn't get compiler errors, the language changes itself to accommodate Chuck Norris",
+    "No statement can catch the ChuckNorrisException.",
+    "Chuck Norris doesn't program with a keyboard. He stares the computer down until it does what he wants.",
+    "Chuck Norris doesn't delete files, he blows them away.",
+    "Chuck Norris programs do not accept input.",
+    "When a bug sees Chuck Norris, it flees screaming in terror, and then immediately self-destructs to avoid being roundhouse-kicked.",
+    "You don't need to follow Chuck Norris on Twitter, he is already following you.",
+    "The First rule of Chuck Norris is: you do not talk about Chuck Norris.",
+    "God said let there be light, Chuck Noris said say please.",
+    "Chuck Norris can draw a square with only 3 lines.",
+    "Chuck Norris makes onions cry.",
+    "Bill Gates lives in constant fear that Chuck Norris' PC will crash.",
+    "Chuck Norris can delete the Recycling Bin.",
+    "Chuck Norris can steal free software.",
+    "Chuck Norris can build a snowman out of rain.",
+    "Chuck Norris can strangle you with a cordless phone.",
+    "The last digit of pi is Chuck Norris. He is the end of all things.",
+    "Chuck Norris fought superman and bet that whoever loses would wear his underwear outside his pants.",
+]
+
+
+###[ MAIN PART ]###
+
+print """
+ _____  __                            ______ __                __
+|     \|__|.---.-.-----.-----.-----. |      |  |--.--.--.----.|  |--.
+|  --  |  ||  _  |     |  _  |  _  | |   ---|     |  |  |  __||    <
+|_____/|  ||___._|__|__|___  |_____| |______|__|__|_____|____||__|__|
+      |___|            |_____|
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"""
+print choice(msgs)
+print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n"
+
+# Read config
+if os.access(conf_file, os.R_OK):
+    sys.path.insert(0, os.path.dirname(conf_file))
+    conf_module = os.path.basename(conf_file).replace(".py", "")
+    __import__(conf_module)
+
+    for attr in dir(sys.modules[conf_module]):
+        if not attr.startswith("_"):
+            cfg[attr] = getattr(sys.modules[conf_module], attr)
+
+# find all commands, autoload them and setup arg parsers
+command_list = find_commands()
+autoload_commands(subparsers, cfg, command_list)
+
+# parse the args and call whatever function was selected
+args = parser.parse_args()
+args.func(args)

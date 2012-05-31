@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Writing templates &mdash; Django Chuck 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django Chuck 0.1 documentation" href="../index.html" />
+    <link rel="next" title="Add your own modules" href="add_module.html" />
+    <link rel="prev" title="chuck_setup.py" href="chuck_setup.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="add_module.html" title="Add your own modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="chuck_setup.html" title="chuck_setup.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="writing-templates">
+<h1>Writing templates<a class="headerlink" href="#writing-templates" title="Permalink to this headline">¶</a></h1>
+<p>Every file in every module will get parsed and rendered through the template engine.</p>
+<p>Template can create new files or extend block in existing files and you can use variables that get replaces by its real values.</p>
+<p>Here is an overview about all available variables.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>$EMAIL_DOMAIN</td>
+<td>Your email domain</td>
+</tr>
+<tr class="row-odd"><td>$PROJECT_PREFIX</td>
+<td>The project prefix (e.g. customer)</td>
+</tr>
+<tr class="row-even"><td>$PROJECT_NAME</td>
+<td>The name of the project</td>
+</tr>
+<tr class="row-odd"><td>$SITE_NAME</td>
+<td>Concatination of project prefix and name</td>
+</tr>
+<tr class="row-even"><td>$MODULE_BASEDIR</td>
+<td>The full path to the module directory</td>
+</tr>
+<tr class="row-odd"><td>$PROJECT_BASEDIR</td>
+<td>Local directory where Chuch shall create new projects</td>
+</tr>
+<tr class="row-even"><td>$PYTHON_VERSION</td>
+<td>The version of the Python interpreter (e.g. 2.7)</td>
+</tr>
+<tr class="row-odd"><td>$SERVER_PROJECT_BASEDIR</td>
+<td>Directory where all you projects are stored on your server (used for fab file)</td>
+</tr>
+<tr class="row-even"><td>$SERVER_VIRTUALENV_BASEDIR</td>
+<td>Directory where all you virtualenvs are stored on your server (used for fab file)</td>
+</tr>
+<tr class="row-odd"><td>$VIRTUALENV_BASEDIR</td>
+<td>Local directory where Chuck shall create virtualenvs</td>
+</tr>
+</tbody>
+</table>
+<p>A template that should be expandable needs an <tt class="docutils literal"><span class="pre">#!chuck_renders</span></tt> block. Its common practive to write block names in uppercase and they cannot contain spaces.</p>
+<p>Let&#8217;s for example create a <tt class="docutils literal"><span class="pre">requirements.txt</span></tt> file with the following content</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c">#!chuck_extends REQUIREMENTS</span>
+<span class="c">#!end</span>
+</pre></div>
+</div>
+<p>The first line creates the block <tt class="docutils literal"><span class="pre">REQUIREMENTS</span></tt> which gets closed by the <tt class="docutils literal"><span class="pre">#!end</span></tt> tag. Please note that currently you cannot use nested blocks!</p>
+<p>Now we will write another template that extends the first one.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c">#!chuck_extends requirements.txt</span>
+
+<span class="c">#!chuck_appends REQUIREMENTS</span>
+<span class="nv">Django</span><span class="o">==</span>1.4.0
+<span class="c">#!end</span>
+</pre></div>
+</div>
+<p>The first line tells the template engine to read the file <tt class="docutils literal"><span class="pre">requirements.txt</span></tt> in your site directory and search for a block called <tt class="docutils literal"><span class="pre">REQUIREMENTS</span></tt>. If it finds one, it appends the contents to that block. You could also use <tt class="docutils literal"><span class="pre">#!chuck_prepends</span></tt> here to prepend the content, <tt class="docutils literal"><span class="pre">#!chuck_renders</span></tt> will completly overwrite the block.</p>
+<p>Here&#8217;s an overview about all available template commands.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>#!chuck_appends</td>
+<td>Appends to a block</td>
+</tr>
+<tr class="row-odd"><td>#!chuck_extends</td>
+<td>Extends the given file. Throws error if file doesnt exist</td>
+</tr>
+<tr class="row-even"><td>#!chuck_extends_if_exists</td>
+<td>Extends the given file only if the file exists</td>
+</tr>
+<tr class="row-odd"><td>#!chuck_prepends</td>
+<td>Prepends to a block</td>
+</tr>
+<tr class="row-even"><td>#!chuck_renders</td>
+<td>Creates or overwrites a block</td>
+</tr>
+<tr class="row-odd"><td>#!end</td>
+<td>Closes a block</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="chuck_setup.html"
+                        title="previous chapter">chuck_setup.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="add_module.html"
+                        title="next chapter">Add your own modules</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/customization/writing_templates.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="add_module.html" title="Add your own modules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="chuck_setup.html" title="chuck_setup.py"
+             >previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Notch Interactive GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

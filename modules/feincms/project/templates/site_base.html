@@ -1,0 +1,33 @@
+#!chuck_extends project/templates/site_base.html
+
+#!chuck_appends TAGS
+{% load feincms_page_tags mptt_tags %}
+#!end
+
+#!chuck_appends TITLE
+    {{ feincms_page.title }}
+#!end
+
+#!chuck_renders MARKUP
+        {% block header %}
+            <h1>{{ feincms_page.title }}</h1>
+            {% feincms_navigation of feincms_page as navitems level=1,depth=3 %}
+            <ul>
+            {% with navitems|siblings_along_path_to:feincms_page as navtree %}
+                {% recursetree navtree %}
+                    <li>{{ node.short_title }}
+                        {% if children %}
+                            <ul>{{ children }}</ul>
+                        {% endif %}
+                    </li>
+                {% endrecursetree %}
+            {% endwith %}
+            </ul>
+        {% endblock %}
+
+        {% block content %}
+        {% endblock content %}
+
+        {% block footer %}
+        {% endblock %}
+#!end

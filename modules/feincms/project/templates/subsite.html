@@ -1,0 +1,9 @@
+{% extends "site_base.html" %}
+{% load i18n feincms_tags %}
+
+{% block content %}
+    <h2>{% trans "Main" %}</h2>
+    {% feincms_render_region feincms_page "main" request %}
+    <h2>{% trans "Sidebar" %}</h2>
+    {% feincms_render_region feincms_page "sidebar" request %}
+{% endblock %}

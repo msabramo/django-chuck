@@ -1,0 +1,12 @@
+###############################
+Additional module repositories
+###############################
+
+Currently their is only the extra repository from Notch Interactive available on `Github <http://github.com/notch-interactive/chuck-modules>`_.
+Feel free to send an email to chuck@notch-interactive.com if you want to add your Chuck module repository to this list.
+
+To add another module repository you have to download it to a local folder and define the ``module_basedirs`` variable in your config file ``~/.django_chuck.conf``.
+
+.. code-block:: bash
+
+  module_basedirs="/some/dir/to/additionial-modules","."

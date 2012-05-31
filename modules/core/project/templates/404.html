@@ -1,0 +1,17 @@
+{% extends "subsite.html" %}
+{% load i18n %}
+
+
+{# This is the page title #}
+{% block title %}{% trans "404 - Page can not be found." %}{% endblock %}
+
+
+{# Content of the page #}
+{% block content %}
+
+	<h1>{% trans "404 - Page can not be found." %}</h1>
+	<p>{% trans "The page you have requested doesn't exist, at least not at this location." %}</p>
+	<p><a href="/">{% trans "Return to the homepage." %}</a></p>
+
+{% endblock %}
+{# end of content #}

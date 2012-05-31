@@ -1,0 +1,125 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Write your own template engine &mdash; Django Chuck 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django Chuck 0.1 documentation" href="../index.html" />
+    <link rel="prev" title="Write your own command" href="writing_a_command.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="writing_a_command.html" title="Write your own command"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="write-your-own-template-engine">
+<h1>Write your own template engine<a class="headerlink" href="#write-your-own-template-engine" title="Permalink to this headline">¶</a></h1>
+<p>Like all other parts of Django Chuck even the template engine can be customized. For the first version we tried to use <a class="reference external" href="http://cheetahtemplate.org/">Cheetah</a> and <a class="reference external" href="http://www.makotemplates.org">Mako</a>, but both didnt really fit our needs so we implemented our own template engine. Nevertheless both old engines still exist and you can use them to write your Chuck templates. Of course you will have to rewrite all modules if you switch the template engine. They cannot be mixed.</p>
+<p>Using either Cheetah or Mako is as easy as setting a config value.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">template_engine</span><span class="o">=</span><span class="s2">&quot;django_chuck.template.mako_engine&quot;</span>
+</pre></div>
+</div>
+<p>You dont like all three and want to implement another one or even your own? No problem! Just create a module in <tt class="docutils literal"><span class="pre">django_chuck.template</span></tt>, let it inherit from <tt class="docutils literal"><span class="pre">BaseEngine</span></tt> and implement the <tt class="docutils literal"><span class="pre">handle</span></tt> function that gets called with the name of each file in each module, it&#8217;s output filename in the site directory and a placeholder dictionary containing all variables and their values.</p>
+<p>All the handle function now has to do is read the <tt class="docutils literal"><span class="pre">input_file</span></tt>, render the template stuff in it by using the <tt class="docutils literal"><span class="pre">placeholder</span></tt> dictionary and write it to the <tt class="docutils literal"><span class="pre">output_file</span></tt>.</p>
+<p>Here&#8217;s the implementation of the Cheetah engine as an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django_chuck.template.base</span> <span class="kn">import</span> <span class="n">BaseEngine</span>
+<span class="kn">from</span> <span class="nn">django_chuck.utils</span> <span class="kn">import</span> <span class="n">write_to_file</span>
+<span class="kn">from</span> <span class="nn">Cheetah.Template</span> <span class="kn">import</span> <span class="n">Template</span>
+
+<span class="k">class</span> <span class="nc">TemplateEngine</span><span class="p">(</span><span class="n">BaseEngine</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">placeholder</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">write_to_file</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+        <span class="n">template</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Template</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">searchList</span><span class="o">=</span><span class="p">[</span><span class="n">placeholder</span><span class="p">]))</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="writing_a_command.html"
+                        title="previous chapter">Write your own command</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/customization/writing_a_template_engine.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="writing_a_command.html" title="Write your own command"
+             >previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Notch Interactive GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

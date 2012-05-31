@@ -1,0 +1,210 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Project structure &mdash; Django Chuck 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django Chuck 0.1 documentation" href="../index.html" />
+    <link rel="next" title="4. Available modules" href="modules.html" />
+    <link rel="prev" title="2. Basic commands" href="basic_commands.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modules.html" title="4. Available modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="basic_commands.html" title="2. Basic commands"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="project-structure">
+<h1>3. Project structure<a class="headerlink" href="#project-structure" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-s-all-that-stuff">
+<h2>3.1. What&#8217;s all that stuff?!<a class="headerlink" href="#what-s-all-that-stuff" title="Permalink to this headline">¶</a></h2>
+<p>Django Chuck generates a whole lot stuff for you if you use the default core moduleset like uwsgi config files and a fab file for a smooth deployment process, requirement files to automatically install Python modules using pip, a chuck_setup.py file for easy project setup and a settings file plus shell script for plug and play Jenkins integration. This section will give you a brief overview about what jewels are included and how you can use them.</p>
+</div>
+<div class="section" id="requirements">
+<h2>3.2. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>All project requirements are stored in the files under the requirements subdirectory.</p>
+<ul class="simple">
+<li>requirements.txt contains the requirements for all environments</li>
+<li>requirements_local.txt entries should only be installed on your workstation</li>
+<li>requirements_dev.txt stuff should be installed if you are a Django developer. It includes debugging and testing tools.</li>
+<li>requirements_live.txt takes all modules that are used to get your hosting up and running (e.g. the production database driver)</li>
+</ul>
+</div>
+<div class="section" id="settings-structure">
+<h2>3.3. Settings structure<a class="headerlink" href="#settings-structure" title="Permalink to this headline">¶</a></h2>
+<p>By default all normal settings like STATIC_ROOT, TEMPLATE_DIRS, MIDDLEWARE_CLASSES and INSTALLED_APPS are located in <tt class="docutils literal"><span class="pre">project/settings/common.py.</span></tt> All settings that are likely to be changed by you like ADMINS, LANGUAGE_CODE and INTERNAL_IPS can be found in <tt class="docutils literal"><span class="pre">custom.py</span></tt>.</p>
+<p>Additionally there are settings for development environment (<tt class="docutils literal"><span class="pre">dev.py</span></tt>), for a staging environment (<tt class="docutils literal"><span class="pre">stage.py</span></tt>) and for live aka production (<tt class="docutils literal"><span class="pre">live.py</span></tt>).</p>
+<p>If you included the unittest module you will also get a <tt class="docutils literal"><span class="pre">project/settings/test.py</span></tt> that can be used to easily setup your project in the continuous integration system <a class="reference external" href="http://www.jenkins-ci.org">Jenkins</a>.</p>
+</div>
+<div class="section" id="testing">
+<h2>3.4. Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>Django itself comes with a wonderful unit testing framework that Django Chuck extends with some sweet additional modules.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Module</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference external" href="http://django-test-utils.readthedocs.org">django-test-utils</a></td>
+<td>Let you run a test server that will automatically generate view tests while browsing the site</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="https://github.com/kmmbvnr/django-any">django-any</a></td>
+<td>Allows you to easily generate some random test data</td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="http://www.logilab.org/project/pylint">pylint</a></td>
+<td>Checks your code quality for best practices and awful smells</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="http://pypi.python.org/pypi/django-jenkins">django-jenkins</a></td>
+<td>Plug and play continuous integration with Django and Jenkins</td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="http://nedbatchelder.com/code/coverage/">coverage</a></td>
+<td>Calculatze the code coverage of your unit tests</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="http://pypi.python.org/pypi/mock/">mock</a></td>
+<td>A mocking library</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="continuous-integration">
+<h2>3.5. Continuous integration<a class="headerlink" href="#continuous-integration" title="Permalink to this headline">¶</a></h2>
+<p>To get Jenkins support you need to install both unittest and jenkins module!</p>
+<p>Additionally you will have to install the following Jenkins modules to get everything up and working:</p>
+<ul class="simple">
+<li>Cobertura Plugin</li>
+<li>Jenkins Violations plugin</li>
+</ul>
+<p>Chucks jenkins module will create a file <tt class="docutils literal"><span class="pre">jenkins/build_script.sh</span></tt> to use to build and test your project and generate code coverage reports.</p>
+<p>Create a new job in Jenkins, choose Free Style project, configure your source code management and use Shell execute as Build step. Click on Report violations and specify the full path to the generated script and in Post-build Actions add <tt class="docutils literal"><span class="pre">reports/pylint.report</span></tt> as pylint xml filename pattern. Click on the checkbox publish JUnit test result report and add <tt class="docutils literal"><span class="pre">reports/TEST-*.xml</span></tt></p>
+<p>For automatic tests choose Poll SCM in the Build Triggers section and enter <tt class="docutils literal"><span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span></tt></p>
+<p>Last but not least check the Publish Cobertura Coverage Report checkbox and add <tt class="docutils literal"><span class="pre">reports/coverage.xml</span></tt> as pattern.</p>
+<p>Now Jenkins will build your virtualenv and database, execute the unit tests, checks source code quality using pylint and generates code coverage reports every time you checkin some new code.</p>
+</div>
+<div class="section" id="deployment">
+<h2>3.6. Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h2>
+<p>Of course of want to deploy your Django project using the WSGI interface. Normally this can be an tedious and error-prone job so let Chuck do it for you!
+Chuck has got a module uwsgi to create a config xml named <tt class="docutils literal"><span class="pre">uwsgi.xml</span></tt> created and an app file called <tt class="docutils literal"><span class="pre">django_wsgi.py</span></tt>.
+Now all you have to do to deploy it on a <a class="reference external" href="http://projects.unbit.it/uwsgi/">uWSGI</a> server is</p>
+<div class="highlight-bash"><div class="highlight"><pre>uwsgi -x uwsgi/live/uwsgi.xml
+</pre></div>
+</div>
+<p>Assumed you used either apache or nginx module to create your project you will find a corresponding directory in the hosting subdirectory to easily add your project as a virtual host to your webserver.</p>
+<p>If your project is running on a remote server it&#8217;s very likely that you want to update it after some time. Chuck created a fab file for you to connect via ssh, checkout the latest source branch (we use stage for testing and live for production environment), play in database updates, update static files and reload the webserver.</p>
+<p>Have a look at <tt class="docutils literal"><span class="pre">fabfile/__init__.py</span></tt> and at least change the user- and hostname for the ssh connection, but surely we also couldnt guess your remote directory structure so adjust them as well.
+Afterwards deployment is as easy as hitting a button. For example this will update your production environment:</p>
+<div class="highlight-bash"><div class="highlight"><pre>fab live deploy
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. Project structure</a><ul>
+<li><a class="reference internal" href="#what-s-all-that-stuff">3.1. What&#8217;s all that stuff?!</a></li>
+<li><a class="reference internal" href="#requirements">3.2. Requirements</a></li>
+<li><a class="reference internal" href="#settings-structure">3.3. Settings structure</a></li>
+<li><a class="reference internal" href="#testing">3.4. Testing</a></li>
+<li><a class="reference internal" href="#continuous-integration">3.5. Continuous integration</a></li>
+<li><a class="reference internal" href="#deployment">3.6. Deployment</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="basic_commands.html"
+                        title="previous chapter">2. Basic commands</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="next chapter">4. Available modules</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/getting_started/project_structure.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modules.html" title="4. Available modules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="basic_commands.html" title="2. Basic commands"
+             >previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Notch Interactive GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+#!chuck_extends requirements/requirements.txt
+
+#!chuck_appends REQUIREMENTS
+django-haystack==1.2.4
+Whoosh==2.1.0
+#!end
+

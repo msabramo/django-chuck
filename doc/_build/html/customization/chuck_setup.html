@@ -1,0 +1,207 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>chuck_setup.py &mdash; Django Chuck 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django Chuck 0.1 documentation" href="../index.html" />
+    <link rel="next" title="Writing templates" href="writing_templates.html" />
+    <link rel="prev" title="Changing the default module set" href="default_modules.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="writing_templates.html" title="Writing templates"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="default_modules.html" title="Changing the default module set"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="chuck-setup-py">
+<h1>chuck_setup.py<a class="headerlink" href="#chuck-setup-py" title="Permalink to this headline">¶</a></h1>
+<p>The file <tt class="docutils literal"><span class="pre">chuck_setup.py</span></tt> is a normal Python file and used to describe a project. If this file is available Chuck is able to automatically setup the project using the <tt class="docutils literal"><span class="pre">setup_project</span></tt> command.</p>
+<p>It can not only be used to describe a project (e.g. project prefix and name, settings file etc.), but also to define hooks before and every build step like syncdb or build virtualenv to customize the build process completly to your needs!</p>
+<p>The script gets some variables and help functions injected to make your life easier. Here&#8217;s an overview which variables get injected.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>virtualenv_dir</td>
+<td>The full path to the virtualenv</td>
+</tr>
+<tr class="row-odd"><td>site_dir</td>
+<td>The full path to the projects site dir</td>
+</tr>
+<tr class="row-even"><td>project_dir</td>
+<td>Combination of site_dir and site_name-project_name</td>
+</tr>
+<tr class="row-odd"><td>project_name</td>
+<td>The name of the project</td>
+</tr>
+<tr class="row-even"><td>site_name</td>
+<td>The name of the site (project_prefix)</td>
+</tr>
+</tbody>
+</table>
+<p>And a list of help functions you can use.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Function</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>execute_in_project(cmd)</td>
+<td>Loads virtualenv and django settings and executes the given command</td>
+</tr>
+<tr class="row-odd"><td>db_cleanup</td>
+<td>Delete django tables for complete db import. Useful for django-cms migration.</td>
+</tr>
+<tr class="row-even"><td>load_fixtures(file)</td>
+<td>Load the given fixture file</td>
+</tr>
+</tbody>
+</table>
+<p>Last but not least a full example that will use custom syncdb and migrate parameter, add an admin user and load some fixtures after successful build.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">project_prefix</span> <span class="o">=</span> <span class="s">&quot;test&quot;</span>
+<span class="n">project_name</span> <span class="o">=</span> <span class="s">&quot;project&quot;</span>
+<span class="n">django_settings</span> <span class="o">=</span> <span class="s">&quot;project.settings.dev&quot;</span>
+<span class="n">extra_syncdb_options</span> <span class="o">=</span> <span class="s">&quot;--all&quot;</span>
+<span class="n">extra_migrate_options</span> <span class="o">=</span> <span class="s">&quot;--fake&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">pre_git_clone</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">post_git_clone</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">pre_build_virtualenv</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">post_build_virtualenv</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">pre_sync_db</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">post_sync_db</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">pre_migrate_db</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">post_migrate_db</span><span class="p">():</span>
+    <span class="n">execute_in_project</span><span class="p">(</span><span class="s">&quot;django-admin.py createsuperuser&quot;</span><span class="p">)</span>
+    <span class="n">db_cleanup</span><span class="p">()</span>
+    <span class="n">load_fixtures</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">site_dir</span><span class="p">,</span> <span class="s">&quot;fixtures&quot;</span><span class="p">,</span> <span class="s">&quot;test_data.json&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="default_modules.html"
+                        title="previous chapter">Changing the default module set</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="writing_templates.html"
+                        title="next chapter">Writing templates</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/customization/chuck_setup.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="writing_templates.html" title="Writing templates"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="default_modules.html" title="Changing the default module set"
+             >previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Notch Interactive GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Add your own modules &mdash; Django Chuck 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django Chuck 0.1 documentation" href="../index.html" />
+    <link rel="next" title="Write your own command" href="writing_a_command.html" />
+    <link rel="prev" title="Writing templates" href="writing_templates.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="writing_a_command.html" title="Write your own command"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="writing_templates.html" title="Writing templates"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="add-your-own-modules">
+<h1>Add your own modules<a class="headerlink" href="#add-your-own-modules" title="Permalink to this headline">¶</a></h1>
+<p>Modules in Django-Chuck are like patches. You describe what the module should change incrementally in which files.
+It&#8217;s best practice to name the change file like the original file an place it in the same directory structure, but if you like you can also create one large file and put all your changes in it. That should be useful if you want to send your new module to <a class="reference external" href="mailto:chuck&#37;&#52;&#48;notch-interactive&#46;com">chuck<span>&#64;</span>notch-interactive<span>&#46;</span>com</a> so we can possibly include it in our module repository.</p>
+<p>Before creating your own module you should configure Chuck to use your own module directory by adding it to the <tt class="docutils literal"><span class="pre">module_basedirs</span></tt> settings and create a new directory in it holding the files of your new module (e.g. coffeemaker).</p>
+<p>Afterwards you normally need a requirements.txt and some settings so let us create those directories</p>
+<div class="highlight-bash"><div class="highlight"><pre>mkdir coffeemaker/requirements
+mkdir -p coffeemaker/project/settings
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">project</span></tt> directory will get renamed to whatever the user specifies as project name.</p>
+<p>Now we create the file requirements.txt to add our requirements (coffeemaschine) to the projects requirements file. Therefore we define that we want to extends <tt class="docutils literal"><span class="pre">requirements/requirements.txt</span></tt> and append a line to the <tt class="docutils literal"><span class="pre">REQUIREMENTS</span></tt> block.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c">#!chuck_extends requirements/requirements.txt</span>
+
+<span class="c">#!chuck_appends REQUREMENTS</span>
+coffeemaschine
+<span class="c">#!end</span>
+</pre></div>
+</div>
+<p>Have a look at the core modules <tt class="docutils literal"><span class="pre">requirements/requirements.txt</span></tt> file and you will see the defined <tt class="docutils literal"><span class="pre">REQUIREMENTS</span></tt> block there</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c">#!chuck_renders REQUIREMENTS</span>
+<span class="nv">Django</span><span class="o">==</span>1.3.1
+<span class="c">#!end</span>
+</pre></div>
+</div>
+<p>Remember <tt class="docutils literal"><span class="pre">#!chuck_appends</span></tt> will append to that block while <tt class="docutils literal"><span class="pre">#!chuck_prepends</span></tt> will prepend and <tt class="docutils literal"><span class="pre">#!chuck_renders</span></tt> will completly overwrite the block.</p>
+<p>Next we need to add some settings (INSTALLED_APPS, and the COFFEEMAKER_HEAT variable).
+Here&#8217;s the patch file <tt class="docutils literal"><span class="pre">coffeemaker/project/settings/common.py</span></tt></p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c">#!chuck_extends project/settings/common.py</span>
+
+<span class="c">#!chuck_appends INSTALLED_APPS</span>
+<span class="s1">&#39;coffeemaker&#39;</span>,
+<span class="c">#!end</span>
+
+<span class="c">#!chuck_appends SETTINGS</span>
+<span class="nv">COFFEEMAKER_HEAT</span><span class="o">=</span>60
+<span class="c">#!end</span>
+</pre></div>
+</div>
+<p>You see the code blocks are normally named after the Django variable or list they extend or after the file they append.
+For more examples dont be shy and have a look at the default modules. They dont bite ;)</p>
+</div>
+<div class="section" id="module-dependencies">
+<h1>Module dependencies<a class="headerlink" href="#module-dependencies" title="Permalink to this headline">¶</a></h1>
+<p>Your module needs another module to be installed? No problem. Just create a file called <tt class="docutils literal"><span class="pre">chuck_module.py</span></tt> to the root directory of your module with the following content:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">depends</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;some_module&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Now <tt class="docutils literal"><span class="pre">some_module</span></tt> gets installed before your module is processed.</p>
+</div>
+<div class="section" id="module-post-build-actions">
+<h1>Module post-build-actions<a class="headerlink" href="#module-post-build-actions" title="Permalink to this headline">¶</a></h1>
+<p>Your module needs to do something after the whole project has been build? Just create a function called <tt class="docutils literal"><span class="pre">post_build</span></tt> in <tt class="docutils literal"><span class="pre">chuck_module.py</span></tt> and let it do whatever you like.
+Here&#8217;s a small example to delete a setting file if it exists.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">post_build</span><span class="p">():</span>
+    <span class="n">dev_setting</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_dir</span><span class="p">,</span> <span class="s">&quot;settings&quot;</span><span class="p">,</span> <span class="s">&quot;dev.py&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">dev_setting</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">R_OK</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Removing &quot;</span> <span class="o">+</span> <span class="n">dev_setting</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">dev_setting</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The file <tt class="docutils literal"><span class="pre">chuck_module.py</span></tt> gets the same variables and functions injected as <a class="reference internal" href="chuck_setup.html"><em>chuck_setup.py</em></a> with one exception it additionally get a list called <tt class="docutils literal"><span class="pre">installed_modules</span></tt> which of course is a list of all successfully installed modules.</p>
+<div class="highlight-python"><pre>def post_build():
+    if "cms" in installed_modules:
+        # do some fancy stuff</pre>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Add your own modules</a></li>
+<li><a class="reference internal" href="#module-dependencies">Module dependencies</a></li>
+<li><a class="reference internal" href="#module-post-build-actions">Module post-build-actions</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="writing_templates.html"
+                        title="previous chapter">Writing templates</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="writing_a_command.html"
+                        title="next chapter">Write your own command</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/customization/add_module.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="writing_a_command.html" title="Write your own command"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="writing_templates.html" title="Writing templates"
+             >previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Notch Interactive GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

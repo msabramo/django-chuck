@@ -1,0 +1,2 @@
+
+depends = ['mongoengine', 'django-tastypie']

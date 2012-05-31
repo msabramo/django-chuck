@@ -1,0 +1,5 @@
+#!chuck_extends requirements/requirements.txt
+
+#!chuck_appends REQUIREMENTS
+django-compressor
+#!end

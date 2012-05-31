@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Installation &mdash; Django Chuck 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django Chuck 0.1 documentation" href="../index.html" />
+    <link rel="next" title="2. Basic commands" href="basic_commands.html" />
+    <link rel="prev" title="Welcome to Django Chuck’s documentation!" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="basic_commands.html" title="2. Basic commands"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to Django Chuck’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<h1>1. Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>1.1. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Python 2.5 or higher</li>
+<li>pip</li>
+<li>virtualenv</li>
+</ul>
+</div>
+<div class="section" id="recommended">
+<h2>1.2. Recommended<a class="headerlink" href="#recommended" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>virtualenvwrapper</li>
+</ul>
+</div>
+<div class="section" id="installation-per-pip">
+<h2>1.3. Installation per pip<a class="headerlink" href="#installation-per-pip" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>pip install django-chuck</li>
+<li>Copy example_conf.py (on Linux /usr/share/django_chuck/example_conf.py, on Mac OS X <tt class="docutils literal"><span class="pre">/opt/local/Library/Frameworks/Python.framework/Versions/2.7/share/django-chuck/example_conf.py</span></tt> if you installed Python via MacPorts otherwise in <tt class="docutils literal"><span class="pre">/System/Library/Frameworks/Python.framework/Versions/2.7./share/django-chuck/example_conf.py</span></tt>) to ~/django_chuck_conf.py</li>
+<li>Edit ~/django_chuck_conf.py</li>
+</ul>
+</div>
+<div class="section" id="installation-via-source-code">
+<h2>1.4. Installation via source code<a class="headerlink" href="#installation-via-source-code" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>git clone <a class="reference external" href="http://www.github.com/notchinteractive/django-chuck.git">http://www.github.com/notchinteractive/django-chuck.git</a></li>
+<li>cd django-chuck</li>
+<li>python setup.py install</li>
+<li>copy example_conf.py to ~/django_chuck_conf.py</li>
+<li>Edit ~/django_chuck_conf.py</li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h2>1.5. Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>Your config file is just a normal Python file so you need to follow the Python syntax, use Python datatypes and you can even dynamically generate the config using functions, external modules, database settings or whatever you like. The config get&#8217;s loaded like a normal Python module.</p>
+<p>Here&#8217;s a brief describtion of the default settings you can configure.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">setting</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>debug</td>
+<td>Turn on debugging mode</td>
+</tr>
+<tr class="row-odd"><td>default_modules</td>
+<td>Comma-seperated list of module that should always be included when creating a new project</td>
+</tr>
+<tr class="row-even"><td>django_settings</td>
+<td>Default Django settings file</td>
+</tr>
+<tr class="row-odd"><td>module_basedirs</td>
+<td>Comma-seperated list of directories where chuck should search for modules . will be replaced with the Django Chuck modules dir</td>
+</tr>
+<tr class="row-even"><td>module_aliases</td>
+<td>A dictionary of lists containing module alias names and list of modules they install</td>
+</tr>
+<tr class="row-odd"><td>project_basedir</td>
+<td>Where to store your projects</td>
+</tr>
+<tr class="row-even"><td>python_version</td>
+<td>Python version to use in virtualenv activate (default is version of current interpreter)</td>
+</tr>
+<tr class="row-odd"><td>template_engine</td>
+<td>Template engine module to use. For example if you want to use Cheetah or Mako instead of Chucks default engine.</td>
+</tr>
+<tr class="row-even"><td>use_virtualenvwrapper</td>
+<td>Indicates if we should use virtualenvwrapper</td>
+</tr>
+<tr class="row-odd"><td>version_control_system</td>
+<td>Version control system to use (can be cvs, svn, git or hg)</td>
+</tr>
+<tr class="row-even"><td>virtualenv_basedir</td>
+<td>Where to store your virtualenvs</td>
+</tr>
+</tbody>
+</table>
+<p>You can add every command parameter to you config settings by using it&#8217;s dest parameter.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="s">&quot;-mbs&quot;</span><span class="p">,</span> <span class="p">{</span>
+               <span class="s">&quot;help&quot;</span><span class="p">:</span> <span class="s">&quot;Comma separated list of dirs where chuck should look for modules&quot;</span><span class="p">,</span>
+               <span class="s">&quot;dest&quot;</span><span class="p">:</span> <span class="s">&quot;module_basedir&quot;</span><span class="p">,</span>
+               <span class="s">&quot;default&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+               <span class="s">&quot;nargs&quot;</span><span class="p">:</span> <span class="s">&quot;?&quot;</span><span class="p">,</span>
+           <span class="p">}),</span>
+</pre></div>
+</div>
+<p>This parameter can be set by using module_basedir in the config file.</p>
+</div>
+<div class="section" id="module-aliases">
+<h2>1.6. Module aliases<a class="headerlink" href="#module-aliases" title="Permalink to this headline">¶</a></h2>
+<p>You have some sets of modules that you want to install quite often and you dont want to type the list of modules over and over again?
+No problem. Just give your module list an alias name and install that instead.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">module_aliases</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;test&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;unittest&quot;</span><span class="p">,</span> <span class="s">&quot;jenkins&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now everytime you specify to install module test in reality unittest and jenkins will get installed.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. Installation</a><ul>
+<li><a class="reference internal" href="#requirements">1.1. Requirements</a></li>
+<li><a class="reference internal" href="#recommended">1.2. Recommended</a></li>
+<li><a class="reference internal" href="#installation-per-pip">1.3. Installation per pip</a></li>
+<li><a class="reference internal" href="#installation-via-source-code">1.4. Installation via source code</a></li>
+<li><a class="reference internal" href="#configuration">1.5. Configuration</a></li>
+<li><a class="reference internal" href="#module-aliases">1.6. Module aliases</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Welcome to Django Chuck&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="basic_commands.html"
+                        title="next chapter">2. Basic commands</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/getting_started/installation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="basic_commands.html" title="2. Basic commands"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to Django Chuck’s documentation!"
+             >previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Notch Interactive GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

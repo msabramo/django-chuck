@@ -1,0 +1,41 @@
+#################
+Available modules
+#################
+
+A brief description of all modules included in Django Chuck.
+
+Please note that this is only a minimum set of modules for the most basic tasks. More apps are available through `additional module repositories`_.
+
+============================================================================= ==========================
+Module                                                                        Description
+============================================================================= ==========================
+apache                                                                        Generates virtualhost for `Apache <http://httpd.apache.org>`_ and a `mod_wsgi <http://code.google.com/p/modwsgi/>`_ config
+cms                                                                           Installs `django-cms <http://www.django-cms>`_ and filer apps
+contact                                                                       A simple contact form app
+core                                                                          Installs Django an the basic project structure
+`django-extensions <https://github.com/django-extensions/django-extensions>`_ Common Django extensions like shell`plus
+`django-debug-toolbar <http://pypi.python.org/pypi/django-debug-toolbar/>`_   The Django debug toolbar
+jenkins                                                                       Plug and play integration with the `Jenkins Coninuous Integration <http://www.jenkins-ci.org>`_ server
+mysql                                                                         `MySQL <http://www.mysql.com>`_ database settings
+nginx                                                                         Generates `NGiNX <http://www.nginx.org>`_ virtualhost config
+oracle                                                                        `Oracle <http://www.oracle.com>`_ database settings
+postgres                                                                      `PostgreSQL <http://www.postgresql.org>`_ database settings
+`south <http://south.aeracode.org/>`_                                         The defacto standard for database migrations
+unittest                                                                      Some wicked, cool unit testing tools
+uwsgi                                                                         Generates a config and app file for your `uWSGI <http://projects.unbit.it/uwsgi/>`_ deployment
+============================================================================= ==========================
+
+
+
+###############################
+Additional module repositories
+###############################
+
+Currently their is only the extra repository from `Notch Interactive <http://www.notch-interactive.com>`_ available on `Github <http://github.com/notch-interactive/chuck-modules>`_.
+Feel free to send an email to chuck@notch-interactive.com if you want to add your module repository to this list.
+
+To add another module repository to Django Chuck you have to download it to a local folder and define the ``module_basedirs`` variable in your config file ``~/.django_chuck.conf``.
+
+.. code-block:: bash
+
+  module_basedirs="/some/dir/to/additionial-modules","."

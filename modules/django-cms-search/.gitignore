@@ -1,0 +1,6 @@
+#!chuck_extends .gitignore
+
+#!chuck_appends GIT
+whoosh/*
+#!end
+

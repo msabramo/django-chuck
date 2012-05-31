@@ -1,0 +1,5 @@
+#!chuck_extends requirements/requirements_dev.txt
+
+#!chuck_appends REQUIREMENTS
+django-jenkins
+#!end

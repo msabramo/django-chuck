@@ -1,0 +1,4 @@
+-r ./requirements_local.txt
+
+#!chuck_renders REQUIREMENTS
+#!end

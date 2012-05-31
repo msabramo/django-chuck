@@ -1,0 +1,5 @@
+-r ./requirements.txt
+
+#!chuck_renders REQUIREMENTS
+Fabric>=1.1.1
+#!end

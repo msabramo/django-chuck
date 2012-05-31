@@ -1,0 +1,5 @@
+#!chuck_extends requirements/requirements_live.txt
+
+#!chuck_appends REQUIREMENTS
+cx-oracle
+#!end

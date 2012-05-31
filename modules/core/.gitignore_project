@@ -1,0 +1,17 @@
+*.class
+*.pyc
+*.pyo
+*.DS_Store
+.pydevproject
+.settings
+.idea
+*/.ropeproject/*
+/db
+/docs
+/scripts
+/static
+/temp
+*/media/upload/
+*/media/cache/
+*/media/generated/
+#!chuck_renders GIT #!end

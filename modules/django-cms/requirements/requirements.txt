@@ -1,0 +1,11 @@
+#!chuck_extends requirements/requirements.txt
+
+#!chuck_appends REQUIREMENTS
+django-cms==2.2
+django-classy-tags==0.3.4.1
+django-mptt==0.5.1
+django-sekizai==0.5
+django-polymorphic==0.2
+easy-thumbnails==1.0-alpha-18
+#!end
+

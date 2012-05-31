@@ -1,0 +1,9 @@
+#!chuck_extends requirements/requirements.txt
+
+#!chuck_appends REQUIREMENTS
+flickrapi==1.4.2
+geopy==0.94.2
+sorl-thumbnail==3.2.5
+-e git://github.com/jpwatts/django-positions.git@2efead20fe4b45599171b1dc75bc524d65a77e3b#egg=django_positions
+-e git://github.com/smulloni/python-oembed.git@e796eafbde766f997e5fb0adb6c3897f3639d050#egg=python_oembed
+#!end

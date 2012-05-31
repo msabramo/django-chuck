@@ -1,0 +1,11 @@
+La vostra registrazione è stata eseguita correttamente. La vostra lista regali è ora salvata e potrà essere richiamata gratuitamente ad ogni vostra visita.
+Come piccolo ringraziamento per la vostra registrazione, trovate in allegato un buono del valore di CHF 5.–, che potrete utilizzare fino al 31.12.2011 in tutti i principali grandi magazzini Manor della Svizzera.
+
+Trovare regali: http://www.{{ domain }}/
+
+Distinti saluti
+
+Il team di Manor
+
+Non desiderate più ricevere e-mail e offerte da parte della guida regali di Manor? In questo caso cliccate qui
+http://www.{{ domain }}/newsletter/disable/{{ user.id }}/{{ user.get_profile.newsletter_hash }}

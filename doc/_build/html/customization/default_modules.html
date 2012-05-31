@@ -1,0 +1,144 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Changing the default module set &mdash; Django Chuck 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django Chuck 0.1 documentation" href="../index.html" />
+    <link rel="next" title="chuck_setup.py" href="chuck_setup.html" />
+    <link rel="prev" title="4. Available modules" href="../getting_started/modules.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="chuck_setup.html" title="chuck_setup.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../getting_started/modules.html" title="4. Available modules"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="changing-the-default-module-set">
+<h1>Changing the default module set<a class="headerlink" href="#changing-the-default-module-set" title="Permalink to this headline">¶</a></h1>
+<p>You dont like the modules Chuck installs when creating a new project? No problem! Just specify your own module set.
+For example you want to use Apache / MySQL instead of Nginx / Postgres and dont like unittests and debugging stuff.
+Edit the config file ~/django_chuck_conf.py and add the following line</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">default_modules</span><span class="o">=[</span><span class="s2">&quot;core&quot;</span>, <span class="s2">&quot;south&quot;</span>, <span class="s2">&quot;mysql&quot;</span>, <span class="s2">&quot;apache&quot;</span>, <span class="s2">&quot;django-extensions&quot;</span><span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="overriding-modules">
+<h1>Overriding modules<a class="headerlink" href="#overriding-modules" title="Permalink to this headline">¶</a></h1>
+<p>You found one module that you want to customize? Please dont do your changes in the original code. It gets overwritten when you update to a new version of Django-Chuck.</p>
+<p>Instead you should copy the module to another directory (e.g. ~/my_chuck_modules), modify it and tell Chuck to look there first. On Linux systems Chucks core modules are stored in <tt class="docutils literal"><span class="pre">/usr/share/django-chuck</span></tt>, on Mac OS X in <tt class="docutils literal"><span class="pre">/opt/local/Library/Frameworks/Python.framework/Versions/2.7/share/django-chuck</span></tt> if you installed Python via MacPorts otherwise in <tt class="docutils literal"><span class="pre">/System/Library/Frameworks/Python.framework/Versions/2.7./share/django-chuck</span></tt>.</p>
+<div class="highlight-bash"><div class="highlight"><pre>cp -av /path/to/old_module ~/my_chuck_modules/old_module
+</pre></div>
+</div>
+<p>Afterwards edit your config file ~/django_chuck_conf.py and add the following</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">module_basedirs</span><span class="o">=[</span><span class="s2">&quot;~/my_chuck_modules&quot;</span>,<span class="s2">&quot;.&quot;</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>Now you can change the module to whatever you like and be sure it doesnt get erased somehow.</p>
+<p><strong>Note</strong> the core module must always be named <tt class="docutils literal"><span class="pre">core</span></tt>!</p>
+</div>
+<div class="section" id="change-project-structure">
+<h1>Change project structure<a class="headerlink" href="#change-project-structure" title="Permalink to this headline">¶</a></h1>
+<p>By overriding the core module you can even change the whole project structure to your own needs!</p>
+<p>Of course you will have to adapt all additional modules you want to use, because the files to extend will point to wrong pathes.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Changing the default module set</a></li>
+<li><a class="reference internal" href="#overriding-modules">Overriding modules</a></li>
+<li><a class="reference internal" href="#change-project-structure">Change project structure</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../getting_started/modules.html"
+                        title="previous chapter">4. Available modules</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="chuck_setup.html"
+                        title="next chapter">chuck_setup.py</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/customization/default_modules.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="chuck_setup.html" title="chuck_setup.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../getting_started/modules.html" title="4. Available modules"
+             >previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Notch Interactive GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

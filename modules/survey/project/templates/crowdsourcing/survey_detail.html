@@ -1,0 +1,17 @@
+{% extends "subsite.html" %}
+{% load crowdsourcing %}
+
+{% block content %}
+
+{% if forms %}
+  <form method="POST" enctype="multipart/form-data" class="survey">
+    {% for form in forms %}
+      {{ form.as_p }}
+    {% endfor %}
+
+    {% csrf_token %}
+    <input type="submit" value="Submit Survey"/>
+  </form>
+{% endif %}
+{% endblock %}
+

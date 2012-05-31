@@ -1,0 +1,154 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Basic commands &mdash; Django Chuck 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django Chuck 0.1 documentation" href="../index.html" />
+    <link rel="next" title="3. Project structure" href="project_structure.html" />
+    <link rel="prev" title="1. Installation" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="project_structure.html" title="3. Project structure"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="1. Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="basic-commands">
+<h1>2. Basic commands<a class="headerlink" href="#basic-commands" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="build-a-new-project">
+<h2>2.1. Build a new project<a class="headerlink" href="#build-a-new-project" title="Permalink to this headline">¶</a></h2>
+<p>To create a project you need to specify a project prefix (e.g. customer), a project name and optionally modules to include in your project.
+For example you the following command will build a django-cms project with a contact app:</p>
+<div class="highlight-bash"><div class="highlight"><pre>chuck create_project &lt;project_prefix&gt; &lt;project_name&gt; contact,cms
+</pre></div>
+</div>
+<p>You can also add other Python module with a version number like for using pip</p>
+<div class="highlight-bash"><div class="highlight"><pre>chuck create_project &lt;project_prefix&gt; &lt;project_name&gt; cms -a <span class="nv">Django</span><span class="o">==</span>1.4
+</pre></div>
+</div>
+</div>
+<div class="section" id="setup-an-existing-project">
+<h2>2.2. Setup an existing project<a class="headerlink" href="#setup-an-existing-project" title="Permalink to this headline">¶</a></h2>
+<p>At some time in your development process you have got a project in your version control system and another developer wants to setup his or her development environment.
+This normally includes the following steps:</p>
+<ul class="simple">
+<li>Checkout the source</li>
+<li>Create virtualenv</li>
+<li>Install requirements</li>
+<li>Setup the database</li>
+<li>Optionally load some fixtures or other test data</li>
+</ul>
+<p>After doing these steps five or tens times it get&#8217;s annoying so let Chuck do it for you!</p>
+<div class="highlight-bash"><div class="highlight"><pre>chuck setup_project &lt;url&gt;
+</pre></div>
+</div>
+<p>for example if you use a Git repository you execute</p>
+<div class="highlight-bash"><div class="highlight"><pre>chuck setup_project git://github.com/notch-interactive/django-chuck
+</pre></div>
+</div>
+<p>If your project wasnt created by Chuck and doesnt contain a <tt class="docutils literal"><span class="pre">chuck_setup.py</span></tt> file Chuck will ask you everything he needs to know to get everything up and running.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. Basic commands</a><ul>
+<li><a class="reference internal" href="#build-a-new-project">2.1. Build a new project</a></li>
+<li><a class="reference internal" href="#setup-an-existing-project">2.2. Setup an existing project</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">1. Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="project_structure.html"
+                        title="next chapter">3. Project structure</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/getting_started/basic_commands.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="project_structure.html" title="3. Project structure"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="1. Installation"
+             >previous</a> |</li>
+        <li><a href="../index.html">Django Chuck 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Notch Interactive GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

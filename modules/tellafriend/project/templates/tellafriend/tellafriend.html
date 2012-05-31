@@ -1,0 +1,33 @@
+{% extends "subsite.html" %}
+{% load i18n %}
+
+{% block tracking-pagename %}tell-a-friend-view{% endblock %}
+
+{% block main-content %}
+	<div class="thin">
+		<form method="post" action="">
+			{% csrf_token %}
+			<fieldset>
+				<div class="row">
+					{{ tellafriend_form.email_sender.errors }}
+					<label for="id_email_sender">{% trans "E-Mail-Absender" %}</label> {{ tellafriend_form.email_sender }}
+				</div>
+				<div class="row">
+					{{ tellafriend_form.email_recipient.errors }}
+					<label for="id_email_recipient">{% trans "E-Mail-Empfänger" %}</label> {{ tellafriend_form.email_recipient }}
+				</div>
+				<div class="row">
+					{{ tellafriend_form.message.errors }}
+					{{ tellafriend_form.message.label_tag }}
+					{{ tellafriend_form.message }}
+				</div>
+				<div class="row">
+					{{ tellafriend_form.captcha.errors }}
+					<label for="id_captcha">{{ tellafriend_form.captcha.help_text }}</label>
+					{{ tellafriend_form.captcha }}
+				</div>
+				<span class="submit-button"><input type="submit" value="{% trans "Absenden" %}"/></span>
+			</fieldset>
+		</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,131 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-26 17:59-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:109
+#, python-format
+msgid "Field %(field)s could not be found in the model %(model)s."
+msgstr ""
+
+#: admin.py:114
+#, python-format
+msgid "Field %(field)s in the model %(model)s is not a ForeignKey."
+msgstr ""
+
+#: admin.py:122 admin.py:224
+#, python-format
+msgid "The %(name)s \"%(obj)s\" was added successfully."
+msgstr ""
+
+#: admin.py:136 admin.py:238
+#, python-format
+msgid "The %(name)s \"%(obj)s\" was changed successfully."
+msgstr ""
+
+#: admin.py:211
+#, python-format
+msgid "Relation %(rel)s could not be found in the model %(model)s."
+msgstr ""
+
+#: admin.py:216
+#, python-format
+msgid "Relation %(rel)s in the model %(model)s is not many-to-one."
+msgstr ""
+
+#: models.py:11
+msgid "language"
+msgstr ""
+
+#: templates/admin/includes/ml_links.html:10
+msgid "Save and Add/Edit Translation:"
+msgstr ""
+
+#: tests/lang_prefixed_urls.py:14
+msgid "^LANG_CODE/"
+msgstr "^en/"
+
+#: tests/models.py:14
+msgid "publish date/time"
+msgstr ""
+
+#: tests/models.py:15
+msgid "public"
+msgstr ""
+
+#: tests/models.py:18
+msgid "news story"
+msgstr ""
+
+#: tests/models.py:19
+msgid "news stories"
+msgstr ""
+
+#: tests/models.py:36
+msgid "core news story"
+msgstr ""
+
+#: tests/models.py:37
+msgid "headline"
+msgstr ""
+
+#: tests/models.py:38
+msgid "slug"
+msgstr ""
+
+#: tests/models.py:39
+msgid "body"
+msgstr ""
+
+#: tests/models.py:42
+msgid "news story translation"
+msgstr ""
+
+#: tests/models.py:43
+msgid "news story translations"
+msgstr ""
+
+#: tests/settings.py:11
+msgid "English"
+msgstr ""
+
+#: tests/settings.py:12
+msgid "French"
+msgstr ""
+
+#: tests/settings.py:13
+msgid "German"
+msgstr ""
+
+#: tests/spangles_urls.py:10
+msgid "^trans-stripes/"
+msgstr ""
+
+#: tests/urls.py:10
+msgid "^trans-things/$"
+msgstr ""
+
+#: tests/urls.py:11
+msgid "^multi-module-spangles/"
+msgstr ""
+
+#: tests/urls.py:12
+msgid "^news-story/(?P<slug>[-\\w]+)/$"
+msgstr ""
+
+#: tests/templates/transurlvania_tests/stuff.html:2
+msgid "Blow up the earth? I hope not! It's where I keep all my stuff!"
+msgstr ""

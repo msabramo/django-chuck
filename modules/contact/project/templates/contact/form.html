@@ -1,0 +1,26 @@
+{% load i18n cms_tags honeypot %}
+
+<form method="POST" action="{% url contact_submit %}">
+
+{% render_honeypot_field %}
+
+{% if form.errors %}<p class="mandatory-fields">{% trans "Erforderliche Felder" %}</p>{% endif %}
+
+{% if form.firstname.errors %}<div class="error"><span>{{ form.firstname.errors }}</span>{% else %}<div>{% endif %}
+    <label for="id_firstname">{% trans "Firstname" %}{% if form.firstname.field.required %}*{% endif %}:</label> {{ form.firstname }}
+</div>
+
+{% if form.surname.errors %}<div class="error"><span>{{ form.surname.errors }}</span>{% else %}<div>{% endif %}
+    <label for="id_surname">{% trans "Surname" %}{% if form.surname.field.required %}*{% endif %}:</label> {{ form.surname }}
+</div>
+
+{% if form.email.errors %}<div class="error"><span>{{ form.email.errors }}</span>{% else %}<div>{% endif %}
+    <label for="id_email">{% trans "E-Mail" %}{% if form.email.field.required %}*{% endif %}:</label> {{ form.email }}
+</div>
+
+{% if form.message.errors %}<div class="error"><span>{{ form.message.errors }}</span>{% else %}<div>{% endif %}
+    <label for="id_comment">{% trans "Message" %}{% if form.message.field.required %}*{% endif %}:</label> {{ form.message }}
+</div>
+
+  <input type="submit" value="{% trans 'Send' %}" />
+</form>

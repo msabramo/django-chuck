@@ -1,0 +1,5 @@
+#!chuck_extends project/requirements/requirements.txt
+
+#!chuck_appends REQUIREMENTS
+html5lib
+#!end

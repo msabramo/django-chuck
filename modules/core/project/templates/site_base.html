@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+#!chuck_renders TAGS
+{% load i18n %}
+#!end
+
+{# Page Title, Meta Description & Meta Keywords #}
+{% block title %}
+#!chuck_renders TITLE
+$PROJECT_NAME
+#!end
+{% endblock %}
+
+{% block meta-description %}
+#!chuck_renders META_DESCRIPTION
+#!end
+{% endblock %}
+
+{% block meta-keywords %}
+#!chuck_renders META_KEYWORDS
+#!end
+{% endblock %}
+
+{# Additional Meta Tags #}
+{% block meta %}
+{#    <meta property="og:title" content="$PROJECT_NAME {% trans "Title" %}" />#}
+{#    <meta property="og:type" content="article" />#}
+{#    <meta property="og:url" content="" />#}
+{#    <meta property="og:site_name" content="$PROJECT_NAME {% trans "Content" %}" />#}
+{#    <meta property="og:description" content="$PROJECT_NAME {% trans "Description" %}" />#}
+{% endblock %}
+
+{# CSS styles #}
+{% block css %}
+#!chuck_renders CSS
+#!end
+{% endblock %}
+
+{# Javascript blocks that get rendered in the head section of the document #}
+{% block js_head %}
+#!chuck_renders JS_HEAD
+#!end
+{% endblock %}
+
+{# Javascript blocks that get rendered at the end of the document #}
+{% block js %}
+#!chuck_renders JS
+#!end
+{% endblock %}
+
+{# Markup #}
+{% block markup %}
+#!chuck_renders MARKUP
+ #!end
+{% endblock %}
