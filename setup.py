@@ -52,5 +52,8 @@ Mercurial.""",
     )
 
     module_dest_dir = os.path.join(sys.prefix, "share", "django_chuck", "modules")
-    remove_tree(module_dest_dir)
+
+    if os.path.exists(module_dest_dir):
+        remove_tree(module_dest_dir)
+
     copy_tree("modules", module_dest_dir, verbose=1, preserve_symlinks=1)
