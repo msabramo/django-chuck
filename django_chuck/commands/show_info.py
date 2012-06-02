@@ -36,17 +36,9 @@ class Command(BaseCommand):
             if hasattr(chuck_module, 'depends'):
                 print "Dependencies: \t %s" % ', '.join(chuck_module.depends)
 
-        # Determine README.txt's path
-        chuck_readme_file = os.path.join(module_dir, "README.txt")
-
-        # Checks whether README.txt exists for this module
-        if os.access(chuck_readme_file, os.R_OK):
-            # Print readme
-            file = open(chuck_readme_file)
-            readme_content = file.read()
-            print "\n"
-            print readme_content
-            file.close()
+            # Print description if present
+            if hasattr(chuck_module, 'description'):
+                print chuck_module.description
 
     def handle(self, args, cfg):
         super(Command, self).handle(args, cfg)
