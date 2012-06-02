@@ -2,7 +2,15 @@ import subprocess
 import os
 
 depends = ['django-compressor', 'less-css']
-name = "twitter-bootstrap"
+description = """
+Adds Twitter's Bootstrap CSS library to your project.
+
+Please note, that this module installs the source files of the Bootstrap
+library and therefore needs LessCSS and Django Compressor support.
+
+For more information, visit:
+http://twitter.github.com/bootstrap/
+"""
 
 def post_build():
     bootstrap_dir = os.path.join(project_dir, 'static/bootstrap')

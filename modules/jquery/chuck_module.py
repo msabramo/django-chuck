@@ -1,6 +1,14 @@
 import subprocess
 import os
 
+description = """
+Installs the jQuery javascript library into the static folders.
+
+Please note, that this module requires Git in order to work properly.
+
+For more information, visit:
+http://jquery.org/
+"""
 
 def post_build():
     jquery_dir = os.path.join(project_dir, 'static/scripts/libs/jquery')

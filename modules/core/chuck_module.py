@@ -1,3 +1,5 @@
+
+description = """
 Django Chuck's core module
 
 Defines the default project layout and requires only Django>=1.4.
@@ -16,3 +18,4 @@ module_basedirs = ["/Users/me/work/my_chuck_modules", "."]
 Now you can adjust the contents of the core module to your needs. Read more about
 overriding \ customizing modules here:
 http://django-chuck.readthedocs.org
+"""
