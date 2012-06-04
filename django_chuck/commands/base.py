@@ -7,9 +7,11 @@ from signal import signal, SIGINT, SIGILL, SIGTERM, SIGSEGV, SIGABRT, SIGQUIT
 import shutil
 import functools
 from random import choice
+from django_chuck.base.modules import BaseModule
 
 
 # The base class for all commands
+
 class BaseCommand(object):
     help = "The base class of all chuck commands"
 
@@ -22,16 +24,16 @@ class BaseCommand(object):
 
         print "\n\n<<< " + choice(killed_msgs)
 
-        if self.delete_project_on_failure or not getattr(self, "delete_project_on_failure"):
-            if os.path.exists(self.site_dir):
-                print "Deleting project data " + self.site_dir
-                shutil.rmtree(self.site_dir)
-
-            if os.path.exists(self.virtualenv_dir):
-                print "Deleting virtualenv " + self.virtualenv_dir
-                shutil.rmtree(self.virtualenv_dir)
-
-            self.signal_handler()
+#        if self.delete_project_on_failure or not getattr(self, "delete_project_on_failure"):
+#            if os.path.exists(self.site_dir):
+#                print "Deleting project data " + self.site_dir
+#                shutil.rmtree(self.site_dir)
+#
+#            if os.path.exists(self.virtualenv_dir):
+#                print "Deleting virtualenv " + self.virtualenv_dir
+#                shutil.rmtree(self.virtualenv_dir)
+#
+#            self.signal_handler()
 
         sys.exit(1)
 
@@ -214,12 +216,63 @@ class BaseCommand(object):
 
         return install_modules
 
+    def get_module_cache(self):
+        # Create module dir cache
+        module_cache = {}
+        for module_basedir in self.module_basedirs:
+            for module in os.listdir(module_basedir):
+                module_dir = os.path.join(module_basedir, module)
+
+                if os.path.isdir(module_dir) and module not in self.module_cache.keys():
+                    module_cache[module] = BaseModule(module, module_dir)
+        return module_cache
+
+    def clean_module_list(self, module_list, module_cache):
+
+        errors = []
+
+        # Add dependencies
+        def get_dependencies(module_list):
+            to_append = []
+            for module_name in module_list:
+                module = module_cache.get(module_name)
+                if module.dependencies:
+                    for module_name in module.dependencies:
+                        if not module_name in module_list:
+                            to_append.append(module_name)
+            return to_append
+
+        to_append = get_dependencies(module_list)
+        while len(to_append) > 0:
+            module_list += to_append
+            to_append = get_dependencies(module_list)
+
+        # Check incompatibilities
+        for module_name in module_list:
+            module = module_cache.get(module_name)
+            if module.incompatibles:
+                for module_name in module.incompatibles:
+                    if module_name in module_list:
+                        errors.append("Module %s is not compatible with module %s" % (module.name, module_name))
+
+        if len(errors) > 0:
+            print "\n<<< ".join(errors)
+            self.kill_system()
+
+        # Order by priority
+
+        module_list = sorted(module_list, key=lambda module: module_cache.get(module).priority)
+        return module_list
+
+
 
     def execute_in_project(self, cmd, return_result=False):
         """
-        Execute a shell command after loading virtualenv and loading django settings and returning results
+        Execute a shell command after loading virtualenv and loading django settings.
+        Parameter return_result decides whether the shell command output should get
+        printed out or returned.
         """
-        commands = self.get_commands(cmd)
+        commands = self.get_virtualenv_setup_commands(cmd)
         kwargs = dict(
             shell=True,
             stderr=subprocess.PIPE
@@ -237,7 +290,7 @@ class BaseCommand(object):
             return stdout
 
 
-    def get_commands(self, cmd):
+    def get_virtualenv_setup_commands(self, cmd):
         if self.use_virtualenvwrapper:
             commands = [
                 'source ' + os.path.join(os.path.expanduser(self.virtualenv_dir), "bin", "activate"),
@@ -333,6 +386,9 @@ class BaseCommand(object):
 
         elif name == "project_dir":
             result = os.path.join(self.site_dir, self.project_name)
+
+        elif name == "delete_project_on_failure":
+            result = self.arg_or_cfg(name)
 
         elif name == "server_project_basedir":
             result = self.arg_or_cfg(name)

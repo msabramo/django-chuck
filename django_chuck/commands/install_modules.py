@@ -33,53 +33,36 @@ class Command(BaseCommand):
 
 
     def install_module(self, module, as_dependency=False):
-        module_dir = self.module_cache.get(module)
-
-        if not module_dir or module in self.installed_modules:
-            return
-
-        # Try to read chuck_module.py
-        chuck_module_file = os.path.join(module_dir, "chuck_module.py")
-
-        if os.access(chuck_module_file, os.R_OK):
-            chuck_module = imp.load_source(module.replace("-", "_"), chuck_module_file)
-
-            # Module has dependencies? Install them first
-            if hasattr(chuck_module, "depends"):
-                for dep_module in chuck_module.depends:
-                    if dep_module not in self.installed_modules:
-                        self.modules_to_install.append(dep_module)
-                        self.install_module(dep_module, True)
-
-            # Module has post build action? Remember it
-            if hasattr(chuck_module, "post_build"):
-                chuck_module = self.inject_variables_and_functions(chuck_module)
-                setattr(chuck_module, "installed_modules", self.installed_modules)
-                self.post_build_actions.append((module, chuck_module.post_build))
-
+        module = self.module_cache.get(module)
+        # Module has post build action? Remember it
+        if module.cfg:
+            cfg = self.inject_variables_and_functions(module.cfg)
+            setattr(cfg, "installed_modules", self.installed_modules)
+            if module.post_build:
+                self.post_build_actions.append((module.name, module.post_build))
 
         if as_dependency:
-            self.print_header("INSTALLING " + module + " AS DEPENDENCY")
+            self.print_header("INSTALLING " + module.name + " AS DEPENDENCY")
         else:
-            self.print_header("BUILDING " + module)
+            self.print_header("BUILDING " + module.name)
 
 
         self.installed_modules.append(module)
 
         # For each file in the module dir
-        for f in get_files(module_dir):
+        for f in get_files(module.dir):
             if not "chuck_module.py" in f:
                 # Absolute path to module file
                 input_file = f
 
                 # Relative path to module file
-                rel_path_old = f.replace(module_dir, "")
+                rel_path_old = f.replace(module.dir, "")
 
                 # Relative path to module file with project_name replaced
-                rel_path_new = f.replace(module_dir, "").replace("project", self.project_name)
+                rel_path_new = f.replace(module.dir, "").replace("project", self.project_name)
 
                 # Absolute path to module file in site dir
-                output_file = f.replace(module_dir, self.site_dir).replace(rel_path_old, rel_path_new)
+                output_file = f.replace(module.dir, self.site_dir).replace(rel_path_old, rel_path_new)
 
                 # Apply templates
                 print "\t%s -> %s" % (input_file, output_file)
@@ -90,9 +73,7 @@ class Command(BaseCommand):
             shutil.move(os.path.join(self.site_dir, ".gitignore_" + self.project_name), os.path.join(self.site_dir, ".gitignore"))
             append_to_file(os.path.join(self.project_dir, "settings", "common.py"), "\nSECRET_KEY = '" + secret_key + "'\n")
 
-        if os.access(chuck_module_file, os.R_OK):
-            sys.path.pop(0)
-
+        self.installed_modules.append(module.name)
 
     def handle(self, args, cfg):
         super(Command, self).handle(args, cfg)
@@ -129,16 +110,14 @@ class Command(BaseCommand):
             os.makedirs(self.site_dir)
 
 
-        # Which modules shall we install?
+        # Get module cache
+        self.module_cache = self.get_module_cache()
+
+        # Modules to install
         self.modules_to_install = self.get_install_modules()
 
-        # Create module dir cache
-        for module_basedir in self.module_basedirs:
-            for module in os.listdir(module_basedir):
-                module_dir = os.path.join(module_basedir, module)
-
-                if os.path.isdir(module_dir) and module not in self.module_cache.keys():
-                    self.module_cache[module] = module_dir
+        # Clean module list
+        self.modules_to_install = self.clean_module_list(self.modules_to_install, self.module_cache)
 
         # Install each module
         for module in self.modules_to_install:
@@ -161,6 +140,7 @@ class Command(BaseCommand):
         # execute post build actions
         if self.post_build_actions:
             self.print_header("EXECUTING POST BUILD ACTIONS")
+
 
             for action in self.post_build_actions:
                 print ">>> " + action[0]
