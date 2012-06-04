@@ -238,15 +238,19 @@ class BaseCommand(object):
 
 
     def get_commands(self, cmd):
+        """
+        Get a list of commands to execute depending wether to use
+        virtualenvwrapper or not
+        """
         if self.use_virtualenvwrapper:
             commands = [
-                'source ' + os.path.join(os.path.expanduser(self.virtualenv_dir), "bin", "activate"),
+                'source virtualenvwrapper.sh',
+                'workon " + self.site_name',
                 'export DJANGO_SETTINGS_MODULE=' + self.django_settings
                 ]
         else:
             commands = [
-                'source virtualenvwrapper.sh',
-                'workon " + self.site_name',
+                'source ' + os.path.join(os.path.expanduser(self.virtualenv_dir), "bin", "activate"),
                 'export DJANGO_SETTINGS_MODULE=' + self.django_settings
                 ]
         commands.append(cmd)
