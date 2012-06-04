@@ -19,8 +19,8 @@ class Command(BaseCommand):
         for line in output:
             if line == '':
                 continue
-            index = line.find('=')
-            self.requirements[line[0:index]] = line[index:]
+            (app, version) = line.split('==')
+            self.requirements[app] = version
 
         self.update_requirement_file(os.path.join(self.site_dir, 'requirements/requirements.txt'))
         self.update_requirement_file(os.path.join(self.site_dir, 'requirements/requirements_live.txt'))
@@ -33,13 +33,11 @@ class Command(BaseCommand):
                 print line,
                 continue
             if line.find('>') > 0:
-                index = line.find('>')
+                (app, version) = line.split(">=")
             elif line.find('<') > 0:
-                index = line.find('<')
+                (app, version) = line.split("<=")
             elif line.find('=') > 0:
-                index = line.find('=')
-            else:
-                index = len(line)
-            app_name = line[0:index]
-            print "%s%s" % (app_name, self.requirements[app_name]),
+                (app, version) = line.split("==")
+
+            print "%s%s" % (app, self.requirements[app]),
 
