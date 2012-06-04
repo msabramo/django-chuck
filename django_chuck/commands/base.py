@@ -238,7 +238,9 @@ class BaseCommand(object):
             to_append = []
             for module_name in module_list:
                 module = module_cache.get(module_name)
-                if module.dependencies:
+                if not module:
+                    errors.append("Module %s could not be found." % module_name)
+                elif module.dependencies:
                     for module_name in module.dependencies:
                         if not module_name in module_list:
                             to_append.append(module_name)
@@ -248,6 +250,10 @@ class BaseCommand(object):
         while len(to_append) > 0:
             module_list += to_append
             to_append = get_dependencies(module_list)
+
+        if len(errors) > 0:
+            print "\n<<< ".join(errors)
+            self.kill_system()
 
         # Check incompatibilities
         for module_name in module_list:
@@ -282,7 +288,8 @@ class BaseCommand(object):
         if return_result:
             kwargs['stdout'] = subprocess.PIPE
 
-        process = subprocess.Popen(' && '.join(commands), **kwargs)
+
+        process = subprocess.Popen('; '.join(commands), **kwargs)
         stdout, stderr = process.communicate()
 
         if stderr:
@@ -295,14 +302,12 @@ class BaseCommand(object):
     def get_virtualenv_setup_commands(self, cmd):
         if self.use_virtualenvwrapper:
             commands = [
-                'source ' + os.path.join(os.path.expanduser(self.virtualenv_dir), "bin", "activate"),
-                'export DJANGO_SETTINGS_MODULE=' + self.django_settings
+                'source virtualenvwrapper.sh',
+                'workon ' + self.site_name,
                 ]
         else:
             commands = [
-                'source virtualenvwrapper.sh',
-                'workon " + self.site_name',
-                'export DJANGO_SETTINGS_MODULE=' + self.django_settings
+                'source ' + os.path.join(os.path.expanduser(self.virtualenv_dir), "bin", "activate"),
                 ]
         commands.append(cmd)
         return commands

@@ -9,6 +9,8 @@ import django_chuck
 class Command(BaseCommand):
     help = "Checkout and setup an existing project"
 
+    module_cache = {}
+
     def __init__(self):
         self.opts = [
             ("checkout_url", {
@@ -53,6 +55,7 @@ class Command(BaseCommand):
             "project_prefix",
             "project_name",
             "django_settings",
+            "modules",
         ]
 
         # Import chuck_setup file
@@ -69,6 +72,7 @@ class Command(BaseCommand):
             self.cfg["project_prefix"] = chuck_setup.project_prefix
             self.cfg["project_name"] = chuck_setup.project_name
             self.cfg["django_settings"] = chuck_setup.django_settings
+            self.cfg["modules"] = chuck_setup.modules
 
             self.inject_variables_and_functions(chuck_setup)
 
@@ -132,6 +136,17 @@ class Command(BaseCommand):
         if chuck_setup and getattr(chuck_setup, "post_build_virtualenv"):
             chuck_setup.post_build_virtualenv()
 
+
+        # Execute post-setup methods if available
+        module_cache = self.get_module_cache()
+        modules_to_check = self.cfg["modules"].split(',')
+        modules_to_check = self.clean_module_list(modules_to_check, module_cache)
+        for module_name in modules_to_check:
+            module = module_cache.get(module_name)
+            if module.cfg:
+                self.inject_variables_and_functions(module.cfg)
+            if module.post_setup:
+                module.post_setup()
 
         # Create database
         os.chdir(self.site_dir)

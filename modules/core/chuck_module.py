@@ -12,10 +12,10 @@ If you want to have your own defaults, just copy the module folder and put it in
 directory that you expose in your configuration file, preferably before the default folder.
 
 Example location:
-/Users/me/work/my_chuck_modules/core
+/my/absolute/path/to/my_chuck_modules/core
 
 Example configuration:
-module_basedirs = ["/Users/me/work/my_chuck_modules", "."]
+module_basedirs = ["/my/absolute/path/to/my_chuck_modules/core", "."]
 
 Now you can adjust the contents of the core module to your needs. Read more about
 overriding \ customizing modules here:

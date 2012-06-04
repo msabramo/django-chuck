@@ -4,7 +4,6 @@ import sys
 import shutil
 from django_chuck.utils import append_to_file, get_files, get_template_engine, compile_template
 from random import choice
-import imp
 
 class Command(BaseCommand):
     help = "Create all modules"
@@ -21,7 +20,6 @@ class Command(BaseCommand):
     # Post build actions
     post_build_actions = []
 
-
     def __init__(self):
         super(Command, self).__init__()
 
@@ -31,9 +29,9 @@ class Command(BaseCommand):
             "nargs": "?",
         }))
 
+    def install_module(self, module_name, as_dependency=False):
+        module = self.module_cache.get(module_name, None)
 
-    def install_module(self, module, as_dependency=False):
-        module = self.module_cache.get(module)
         # Module has post build action? Remember it
         if module.cfg:
             cfg = self.inject_variables_and_functions(module.cfg)
@@ -77,8 +75,18 @@ class Command(BaseCommand):
 
     def handle(self, args, cfg):
         super(Command, self).handle(args, cfg)
+
         self.installed_modules = []
+
+        # Get module cache
+        self.module_cache = self.get_module_cache()
+
+        # Modules to install
+        self.modules_to_install = self.get_install_modules()
+
+        # The template engine that is used to compile the project files
         template_engine = get_template_engine(self.site_dir, self.project_dir, cfg.get("template_engine"))
+
         self.placeholder = {
             "PROJECT_PREFIX": self.project_prefix,
             "PROJECT_NAME": self.project_name,
@@ -90,6 +98,7 @@ class Command(BaseCommand):
             "SERVER_PROJECT_BASEDIR": self.server_project_basedir,
             "SERVER_VIRTUALENV_BASEDIR": self.server_virtualenv_basedir,
             "EMAIL_DOMAIN": self.email_domain,
+            "MODULES": ','.join(self.modules_to_install),
         }
 
 
@@ -108,13 +117,6 @@ class Command(BaseCommand):
         # Building a new project
         else:
             os.makedirs(self.site_dir)
-
-
-        # Get module cache
-        self.module_cache = self.get_module_cache()
-
-        # Modules to install
-        self.modules_to_install = self.get_install_modules()
 
         # Clean module list
         self.modules_to_install = self.clean_module_list(self.modules_to_install, self.module_cache)

@@ -22,6 +22,7 @@ project_prefix = "$PROJECT_PREFIX"
 project_name = "$PROJECT_NAME"
 site_name = "$SITE_NAME"
 django_settings = "$PROJECT_NAME.settings.dev"
+modules = "$MODULES"
 extra_syncdb_options = ""
 extra_migrate_options = ""
 
@@ -54,4 +55,4 @@ def pre_migrate_db():
 
 
 def post_migrate_db():
-    execute_in_project("django-admin.py createsuperuser")
+    pass

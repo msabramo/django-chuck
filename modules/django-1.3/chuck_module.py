@@ -1,6 +1,5 @@
-from django_chuck.base.constants import HIGH
 
-priority = HIGH
+priority = 1
 
 description = """
 Provides legacy support for Django 1.3.

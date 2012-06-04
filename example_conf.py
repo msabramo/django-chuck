@@ -6,7 +6,7 @@ project_basedir="~/work/projects"
 
 # Comma seperated list of dirs where Chuck should look for modules.
 # . will be replaced with the Django Chuck modules dir
-#module_basedirs = [".", "/some/dir/to/additionial-modules"]
+module_basedirs = ["."]
 
 # comma seperated list of modules that always should be installed
 default_modules=["core"]
@@ -50,9 +50,6 @@ module_aliases = {
 
 # Run in debug mode
 debug = False
-
-# Delete project data on build failure?
-delete_project_on_failure = True
 
 # Module to use as template engine
 # Default: django_chuck.template.notch_interactive.engine
