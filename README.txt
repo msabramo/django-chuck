@@ -52,7 +52,7 @@ chuck create_project test project contact,cms
 # Setup an existing project with virtualenv and db
 chuck setup_project <[cvs|svn|git|hg]-url>
 
-# Rebuild your database and load some fixtures (good for django-cms migrations)
+# Rebuild your database and load some fixtures
 chuck rebuild_database test project /path/to/fixture/file.json
 
 # For more commands ands information see

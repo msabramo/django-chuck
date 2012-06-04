@@ -3,8 +3,6 @@ import sys
 import shutil
 from django_chuck.commands.base import BaseCommand
 from django_chuck.commands import checkout_source, create_virtualenv, install_virtualenv, sync_database, migrate_database
-import django_chuck
-
 
 class Command(BaseCommand):
     help = "Checkout and setup an existing project"
@@ -137,7 +135,9 @@ class Command(BaseCommand):
             chuck_setup.post_build_virtualenv()
 
 
+        self.print_header("EXECUTE POST-SETUP METHODS IF AVAILABLE")
         # Execute post-setup methods if available
+
         module_cache = self.get_module_cache()
         modules_to_check = self.cfg["modules"].split(',')
         modules_to_check = self.clean_module_list(modules_to_check, module_cache)
