@@ -1,4 +1,6 @@
 
+priority = 0
+
 description = """
 Django Chuck's core module
 

@@ -1,13 +1,13 @@
 import pdb
+import shutil
 import subprocess
 import re
 import os
 import sys
 from signal import signal, SIGINT, SIGILL, SIGTERM, SIGSEGV, SIGABRT, SIGQUIT
-import shutil
-import functools
 from random import choice
 from django_chuck.base.modules import BaseModule
+from django_chuck.base import constants
 
 
 # The base class for all commands
@@ -24,16 +24,16 @@ class BaseCommand(object):
 
         print "\n\n<<< " + choice(killed_msgs)
 
-#        if self.delete_project_on_failure or not getattr(self, "delete_project_on_failure"):
-#            if os.path.exists(self.site_dir):
-#                print "Deleting project data " + self.site_dir
-#                shutil.rmtree(self.site_dir)
-#
-#            if os.path.exists(self.virtualenv_dir):
-#                print "Deleting virtualenv " + self.virtualenv_dir
-#                shutil.rmtree(self.virtualenv_dir)
-#
-#            self.signal_handler()
+        if self.delete_project_on_failure or not getattr(self, "delete_project_on_failure"):
+            if os.path.exists(self.site_dir):
+                print "Deleting project data " + self.site_dir
+                shutil.rmtree(self.site_dir)
+
+            if os.path.exists(self.virtualenv_dir):
+                print "Deleting virtualenv " + self.virtualenv_dir
+                shutil.rmtree(self.virtualenv_dir)
+
+            self.signal_handler()
 
         sys.exit(1)
 
@@ -222,9 +222,11 @@ class BaseCommand(object):
         for module_basedir in self.module_basedirs:
             for module in os.listdir(module_basedir):
                 module_dir = os.path.join(module_basedir, module)
-
                 if os.path.isdir(module_dir) and module not in self.module_cache.keys():
                     module_cache[module] = BaseModule(module, module_dir)
+                    # TODO: Ignore list for folders and filenames
+                    if module_cache[module].cfg:
+                        self.inject_variables_and_functions(module_cache[module].cfg)
         return module_cache
 
     def clean_module_list(self, module_list, module_cache):
@@ -470,11 +472,15 @@ class BaseCommand(object):
         setattr(victim_class, "project_dir", os.path.join(self.site_dir, self.project_name))
         setattr(victim_class, "project_name", self.project_name)
         setattr(victim_class, "site_name", self.site_name)
+        setattr(victim_class, "HIGH", constants.HIGH)
+        setattr(victim_class, "MEDIUM", constants.MEDIUM)
+        setattr(victim_class, "LOW", constants.LOW)
 
         # inject functions
         setattr(victim_class, "execute_in_project", self.execute_in_project)
         setattr(victim_class, "db_cleanup", self.db_cleanup)
         setattr(victim_class, "load_fixtures", self.load_fixtures)
+
 
         return victim_class
 

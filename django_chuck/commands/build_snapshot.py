@@ -22,10 +22,10 @@ class Command(BaseCommand):
             index = line.find('=')
             self.requirements[line[0:index]] = line[index:]
 
-        self.update_requirement_file(os.path.join(self.site_dir, 'requirements/requirements.txt'))
-        self.update_requirement_file(os.path.join(self.site_dir, 'requirements/requirements_live.txt'))
-        self.update_requirement_file(os.path.join(self.site_dir, 'requirements/requirements_dev.txt'))
         self.update_requirement_file(os.path.join(self.site_dir, 'requirements/requirements_local.txt'))
+        self.update_requirement_file(os.path.join(self.site_dir, 'requirements/requirements_dev.txt'))
+        self.update_requirement_file(os.path.join(self.site_dir, 'requirements/requirements_live.txt'))
+        self.replace_requirement_file(os.path.join(self.site_dir, 'requirements/requirements.txt'))
 
     def update_requirement_file(self, file):
         for line in fileinput.input(file, inplace=1):
@@ -39,7 +39,14 @@ class Command(BaseCommand):
             elif line.find('=') > 0:
                 index = line.find('=')
             else:
-                index = len(line)
+                index = line.find('\n')
             app_name = line[0:index]
-            print "%s%s" % (app_name, self.requirements[app_name]),
+            print "%s%s\n" % (app_name, self.requirements[app_name]),
+            del self.requirements[app_name]
 
+    def replace_requirement_file(self, file):
+        f = open(file, 'w+')
+        f.truncate()
+        s = '\n'.join(['%s%s'% (app_name, self.requirements[app_name]) for app_name in self.requirements])
+        f.write(s)
+        f.close()
