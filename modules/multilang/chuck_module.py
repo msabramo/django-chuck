@@ -1,4 +1,0 @@
-
-description = """
-Multiple language support.
-"""

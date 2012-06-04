@@ -1,3 +1,0 @@
-{% for ance in ancestors %}
-    <li>{% if not forloop.first %}&raquo;&nbsp;{% endif %}<a href="{% url search_result_click query ance.get_path %}">{{ ance.get_menu_title }}</a></li>
-{% endfor %}

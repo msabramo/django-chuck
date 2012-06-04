@@ -24,3 +24,6 @@ def post_build():
         npm install less; \
         ln -s -v '+source+' '+target+';'
         , shell=True)
+
+def post_setup():
+    post_build()

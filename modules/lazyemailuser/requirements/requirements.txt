@@ -1,5 +1,0 @@
-#!chuck_extends requirements/requirements.txt
-
-#!chuck_appends REQUIREMENTS
--e git://gitorious.notch-interactive.ch/notch-intern/django-lazyemailuser.git@c18c3d19e96d479b09bf0980b7cb7acc355b9636#egg=django_lazyemailuser
-#!end
