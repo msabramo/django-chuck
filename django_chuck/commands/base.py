@@ -7,7 +7,7 @@ import sys
 from signal import signal, SIGINT, SIGILL, SIGTERM, SIGSEGV, SIGABRT, SIGQUIT
 from random import choice
 from django_chuck.base.modules import BaseModule
-from django_chuck.base import constants
+#from django_chuck.base import constants
 
 
 # The base class for all commands
@@ -24,7 +24,7 @@ class BaseCommand(object):
 
         print "\n\n<<< " + choice(killed_msgs)
 
-        if self.delete_project_on_failure or not getattr(self, "delete_project_on_failure"):
+        if getattr(self, "delete_project_on_failure") and self.delete_project_on_failure:
             if os.path.exists(self.site_dir):
                 print "Deleting project data " + self.site_dir
                 shutil.rmtree(self.site_dir)
@@ -477,9 +477,9 @@ class BaseCommand(object):
         setattr(victim_class, "project_dir", os.path.join(self.site_dir, self.project_name))
         setattr(victim_class, "project_name", self.project_name)
         setattr(victim_class, "site_name", self.site_name)
-        setattr(victim_class, "HIGH", constants.HIGH)
-        setattr(victim_class, "MEDIUM", constants.MEDIUM)
-        setattr(victim_class, "LOW", constants.LOW)
+        #setattr(victim_class, "HIGH", constants.HIGH)
+        #setattr(victim_class, "MEDIUM", constants.MEDIUM)
+        #setattr(victim_class, "LOW", constants.LOW)
 
         # inject functions
         setattr(victim_class, "execute_in_project", self.execute_in_project)

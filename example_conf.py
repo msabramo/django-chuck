@@ -51,6 +51,9 @@ module_aliases = {
 # Run in debug mode
 debug = False
 
+# Dont delete project after failure?
+# delete_project_on_failure=False
+
 # Module to use as template engine
 # Default: django_chuck.template.notch_interactive.engine
 template_engine = "django_chuck.template.notch_interactive.engine"
