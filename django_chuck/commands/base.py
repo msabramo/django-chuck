@@ -282,7 +282,8 @@ class BaseCommand(object):
         commands = self.get_virtualenv_setup_commands(cmd)
         kwargs = dict(
             shell=True,
-            stderr=subprocess.PIPE
+            stderr=subprocess.PIPE,
+            stdin=subprocess.PIPE,
         )
         if return_result:
             kwargs['stdout'] = subprocess.PIPE

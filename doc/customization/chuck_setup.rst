@@ -66,6 +66,5 @@ Last but not least a full example that will use custom syncdb and migrate parame
 
 
   def post_migrate_db():
-      execute_in_project("django-admin.py createsuperuser")
       db_cleanup()
       load_fixtures(os.path.join(site_dir, "fixtures", "test_data.json"))
