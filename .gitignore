@@ -5,3 +5,5 @@ virtualenv/*
 build/*
 .ropeproject/*
 django_chuck/template/notch_interactive/test/project_dir/*
+MANIFEST
+.tox
