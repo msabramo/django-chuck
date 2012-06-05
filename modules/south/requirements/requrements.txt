@@ -1,5 +1,5 @@
 #!chuck_extends requirements/requirements.txt
 
 #!chuck_appends REQUIREMENTS
-South
+South==0.7.3
 #!end
