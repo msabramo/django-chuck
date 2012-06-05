@@ -1,18 +1,12 @@
-.. code-block:: python
     _____  __                            ______ __                __
-   |     \|__|.---.-.-----.-----.-----. |      |  |--.--.--.----.|  |--.
-   |  --  |  ||  _  |     |  _  |  _  | |   ---|     |  |  |  __||    <
-   |  _____/|  ||___._|__|__|___  |_____| |______|__|__|_____|____||__|__|
-   |___|            |_____|
+    |     \|__|.---.-.-----.-----.-----. |      |  |--.--.--.----.|  |--.
+    |  --  |  ||  _  |     |  _  |  _  | |   ---|     |  |  |  __||    <
+    |_____/|  ||___._|__|__|___  |_____| |______|__|__|_____|____||__|__|
+          |___|            |_____|
 
 =================================================
 Django Chuck - Your powerful project punch button
 =================================================
-
-Please note
------------
-
-...that this project is still growing. Even the new kids on the block need a chance sometimes...
 
 About
 -----
@@ -47,49 +41,36 @@ Installation
   also supported.
 
 * Copy the example.conf to your home dir (~/.django_chuck_conf.py), edit it
-  and at least have a look at the following files:
+  and at least have a look at the following files::
 
-.. code-block:: python
-   modules/core/project/settings/custom.py
-   modules/core/fabfile/__init__.py
+    modules/core/project/settings/custom.py
+    modules/core/fabfile/__init__.py
 
 
 How to use it
 -------------
 
-List all available modules
+List all available modules::
 
-.. code-block:: bash
+    chuck list_modules
 
-  chuck list_modules
+Show information about a module::
 
-Show information about a module
+    chuck show_info <module_name>
 
-.. code-block:: bash
+Create a new project with django-tastypie, html5lib and jquery support::
 
-  chuck show_info <module_name>
+    chuck create_project test project django-tastypie,html5lib,jquery
 
-Create a new project with django-tastypie, html5lib and jquery support
+Setup an existing project with virtualenv and db::
 
-.. code-block:: bash
+     chuck setup_project <[cvs|svn|git|hg]-url>
 
-  chuck create_project test project django-tastypie,html5lib,jquery
+Rebuild your database and load some fixtures::
 
-Setup an existing project with virtualenv and db
+    chuck rebuild_database test project /path/to/fixture/file.json
 
-.. code-block:: python
+For more commands ands information see::
 
-   chuck setup_project <[cvs|svn|git|hg]-url>
-
-Rebuild your database and load some fixtures
-
-.. code-block:: python
-
-   chuck rebuild_database test project /path/to/fixture/file.json
-
-For more commands ands information see
-
-.. code-block:: python
-
-   chuck -h
-   chuck <command> -h
+    chuck -h
+    chuck <command> -h
