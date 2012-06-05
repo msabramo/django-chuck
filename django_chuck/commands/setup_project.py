@@ -53,7 +53,6 @@ class Command(BaseCommand):
             "project_prefix",
             "project_name",
             "django_settings",
-            "modules",
         ]
 
         # Import chuck_setup file
@@ -63,14 +62,16 @@ class Command(BaseCommand):
             import chuck_setup
 
             for param in chuck_setup_required_params:
-                if not getattr(chuck_setup, param):
+                if not hasattr(chuck_setup, param):
                     print "Parameter " + param + " is missing in chuck_setup.py!"
                     sys.exit(1)
 
             self.cfg["project_prefix"] = chuck_setup.project_prefix
             self.cfg["project_name"] = chuck_setup.project_name
             self.cfg["django_settings"] = chuck_setup.django_settings
-            self.cfg["modules"] = chuck_setup.modules
+
+            if hasattr(chuck_setup, "modules"):
+                self.cfg["modules"] = chuck_setup.modules
 
             self.inject_variables_and_functions(chuck_setup)
 
@@ -135,18 +136,19 @@ class Command(BaseCommand):
             chuck_setup.post_build_virtualenv()
 
 
-        self.print_header("EXECUTE POST-SETUP METHODS IF AVAILABLE")
-        # Execute post-setup methods if available
+        if self.cfg.get("modules"):
+            self.print_header("EXECUTE POST-SETUP METHODS IF AVAILABLE")
+            # Execute post-setup methods if available
 
-        module_cache = self.get_module_cache()
-        modules_to_check = self.cfg["modules"].split(',')
-        modules_to_check = self.clean_module_list(modules_to_check, module_cache)
-        for module_name in modules_to_check:
-            module = module_cache.get(module_name)
-            if module.cfg:
-                self.inject_variables_and_functions(module.cfg)
-            if module.post_setup:
-                module.post_setup()
+            module_cache = self.get_module_cache()
+            modules_to_check = self.cfg["modules"].split(',')
+            modules_to_check = self.clean_module_list(modules_to_check, module_cache)
+            for module_name in modules_to_check:
+                module = module_cache.get(module_name)
+                if module.cfg:
+                    self.inject_variables_and_functions(module.cfg)
+                if module.post_setup:
+                    module.post_setup()
 
         # Create database
         os.chdir(self.site_dir)
