@@ -53,12 +53,15 @@
             
   <div class="section" id="available-modules">
 <h1>4. Available modules<a class="headerlink" href="#available-modules" title="Permalink to this headline">¶</a></h1>
-<p>A brief description of all modules included in Django Chuck.</p>
-<p>Please note that this is only a minimum set of modules for the most basic tasks. More apps are available through <a class="reference internal" href="#additional-module-repositories">additional module repositories</a>.</p>
+<p>Django Chuck literally consists of modules. It is most likely that you want to write your own Chuck modules
+once you understand the concept, but you got to admit that sometimes some good built-ins come in just handy. This section
+is about the modules that ship with Django Chuck by default.</p>
+<p>Hitting the docs every time you&#8217;re about to install a plugin might feel circumstantial. Use <tt class="docutils literal"><span class="pre">chuck</span> <span class="pre">list_modules</span></tt> to get
+an overview of all installed modules. Use <tt class="docutils literal"><span class="pre">chuck</span> <span class="pre">show_info</span> <span class="pre">&lt;module_name&gt;</span></tt> to display further information.</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="30%" />
-<col width="70%" />
+<col width="39%" />
+<col width="61%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Module</th>
@@ -70,22 +73,17 @@
 <td>Generates virtualhost for <a class="reference external" href="http://httpd.apache.org">Apache</a> and a <a class="reference external" href="http://code.google.com/p/modwsgi/">mod_wsgi</a> config</td>
 </tr>
 <tr class="row-odd"><td>coffee-script</td>
-<td>Installs the CoffeeScript binary into your virtualenv and adds its path to the django-compressor precompilers setting.</td>
+<td>Installs the CoffeeScript binary into your virtualenv and adds its path to the django-compressor precompilers setting.
+Needs a working installation of node.js and npm.</td>
 </tr>
-<tr class="row-even"><td>contact</td>
-<td>A simple contact form app</td>
+<tr class="row-even"><td>core</td>
+<td>The main thing!</td>
 </tr>
-<tr class="row-odd"><td>core</td>
-<td>Installs Django an the basic project structure</td>
+<tr class="row-odd"><td>django-1.3</td>
+<td>Legacy support for Django 1.3.</td>
 </tr>
-<tr class="row-even"><td>django-1.3</td>
-<td>Installs Django 1.3 (django-sekizai, a requirement of the cms module, doesnt work with Django 1.4 yet)</td>
-</tr>
-<tr class="row-odd"><td>django-cms</td>
+<tr class="row-even"><td>django-cms</td>
 <td>Installs <a class="reference external" href="http://www.django-cms">Django-Cms</a> and filer apps</td>
-</tr>
-<tr class="row-even"><td>django-cms-search</td>
-<td><a class="reference external" href="http://haystacksearch.org/">Haystack</a> search engine for Django-Cms</td>
 </tr>
 <tr class="row-odd"><td>django-compressor</td>
 <td>Compresses linked and inline JavaScript or CSS into single cached files.</td>
@@ -121,22 +119,18 @@
 <td>Plug and play integration with the <a class="reference external" href="http://www.jenkins-ci.org">Jenkins Coninuous Integration</a> server</td>
 </tr>
 <tr class="row-even"><td>jquery</td>
-<td>Installs the <a class="reference external" href="http://jquery.org/">jQuery</a> javascript library</td>
+<td>Installs the <a class="reference external" href="http://jquery.org/">jQuery</a> javascript library.
+Needs git in order to work properly.</td>
 </tr>
-<tr class="row-odd"><td>lazyemailuser</td>
-<td>Based on <a class="reference external" href="http://pypi.python.org/pypi/django-lazysignup/">django-lazysignup</a> to collect data with an temp user and convert it to a real user with username based on email address</td>
+<tr class="row-odd"><td>less-css</td>
+<td>The dynamic stylesheet language <a class="reference external" href="http://lesscss.org/">less-css</a>.
+Needs a working installation of node.js and npm.</td>
 </tr>
-<tr class="row-even"><td>less-css</td>
-<td>The dynamic stylesheet language <a class="reference external" href="http://lesscss.org/">less-css</a>.</td>
-</tr>
-<tr class="row-odd"><td>mongoengine</td>
+<tr class="row-even"><td>mongoengine</td>
 <td>A Python Document-Object Mapper for working with MongoDB</td>
 </tr>
-<tr class="row-even"><td>mootools</td>
-<td>Install the <a class="reference external" href="http://mootools.net/">Mootools</a> javascript library</td>
-</tr>
-<tr class="row-odd"><td>multilang</td>
-<td>Multiple language support</td>
+<tr class="row-odd"><td>mootools</td>
+<td>Installs the <a class="reference external" href="http://mootools.net/">Mootools</a> javascript library</td>
 </tr>
 <tr class="row-even"><td>mysql</td>
 <td><a class="reference external" href="http://www.mysql.com">MySQL</a> database settings</td>
@@ -156,31 +150,103 @@
 <tr class="row-odd"><td><a class="reference external" href="http://south.aeracode.org/">south</a></td>
 <td>The defacto standard for database migrations</td>
 </tr>
-<tr class="row-even"><td>survey</td>
-<td>Installs <cite>django-crowdsourcing &lt;http://pypi.python.org/pypi/django-crowdsourcing/1.1.31&gt;</cite></td>
-</tr>
-<tr class="row-odd"><td>tellafriend</td>
-<td>Send link to current site in an email to tell a friend about it</td>
-</tr>
 <tr class="row-even"><td>twitter-bootstrap</td>
-<td>&nbsp;</td>
+<td>The current defacto standard for frontend prototyping.
+Requires git and depends on less-css module</td>
 </tr>
 <tr class="row-odd"><td>unittest</td>
-<td>Some wicked, cool unit testing tools</td>
+<td>A collection of apps that make your TDD life a lot more easier.</td>
 </tr>
 <tr class="row-even"><td>uwsgi</td>
 <td>Generates a config and app file for your <a class="reference external" href="http://projects.unbit.it/uwsgi/">uWSGI</a> deployment</td>
 </tr>
 </tbody>
 </table>
+<div class="section" id="a-few-words-about">
+<h2>4.1. A few words about...<a class="headerlink" href="#a-few-words-about" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="testing">
+<h3>4.1.1. Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h3>
+<p>Django itself comes with a wonderful unit testing framework but Chuck takes things even further with the unittest module,
+a nice and useful collection of apps that makes the life of any TD dev a lot easier.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Module</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference external" href="http://django-test-utils.readthedocs.org">django-test-utils</a></td>
+<td>Let you run a test server that will automatically generate view tests while browsing the site</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="https://github.com/kmmbvnr/django-any">django-any</a></td>
+<td>Allows you to easily generate some random test data</td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="http://www.logilab.org/project/pylint">pylint</a></td>
+<td>Checks your code quality for best practices and awful smells</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="http://pypi.python.org/pypi/django-jenkins">django-jenkins</a></td>
+<td>Plug and play continuous integration with Django and Jenkins</td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="http://nedbatchelder.com/code/coverage/">coverage</a></td>
+<td>Calculatze the code coverage of your unit tests</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="http://pypi.python.org/pypi/mock/">mock</a></td>
+<td>A mocking library</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="section" id="additional-module-repositories">
-<h1>5. Additional module repositories<a class="headerlink" href="#additional-module-repositories" title="Permalink to this headline">¶</a></h1>
-<p>Currently their is only the extra repository from Notch Interactive available on <a class="reference external" href="http://github.com/notch-interactive/chuck-modules">Github</a>.
-Feel free to send an email to <a class="reference external" href="mailto:chuck&#37;&#52;&#48;notch-interactive&#46;com">chuck<span>&#64;</span>notch-interactive<span>&#46;</span>com</a> if you want to add your Chuck module repository to this list.</p>
-<p>To add another module repository you have to download it to a local folder and define the <tt class="docutils literal"><span class="pre">module_basedirs</span></tt> variable in your config file <tt class="docutils literal"><span class="pre">~/.django_chuck_conf.py</span></tt>.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">module_basedirs</span><span class="o">=</span><span class="s2">&quot;/some/dir/to/additionial-modules&quot;</span>,<span class="s2">&quot;.&quot;</span>
+<div class="section" id="continuous-integration">
+<h3>4.1.2. Continuous integration<a class="headerlink" href="#continuous-integration" title="Permalink to this headline">¶</a></h3>
+<p>You may want to have your web app to be quality controlled. Seriously, if you code towards a major release, you want that
+happen. At this point we recommend <a class="reference external" href="http://pypi.python.org/pypi/django-jenkins">django-jenkins</a>.</p>
+<p>To get Jenkins support you need to install both the unittest and jenkins module. There is a reason for us
+exposing those two modules as example alias in the <tt class="docutils literal"><span class="pre">example_conf.py</span></tt>.</p>
+<p>Additionally you will have to install the following (not Django-related) Jenkins modules to get everything up and working:</p>
+<ul class="simple">
+<li>Cobertura Plugin</li>
+<li>Jenkins Violations plugin</li>
+</ul>
+<p>Chuck&#8217;s jenkins module will create a file <tt class="docutils literal"><span class="pre">jenkins/build_script.sh</span></tt> to use to build and test your project and generate
+code coverage reports.</p>
+<p>When your server is up and running, do the following:</p>
+<ul class="simple">
+<li>Create a new job in Jenkins</li>
+<li>Choose <em>Free Style project</em></li>
+<li>Configure your source code management and use Shell execute as
+Build step. Click on Report violations and specify the full path to the generated script and in Post-build Actions add
+<tt class="docutils literal"><span class="pre">reports/pylint.report</span></tt> as pylint xml filename pattern. Click on the checkbox publish JUnit test result report and add <tt class="docutils literal"><span class="pre">reports/TEST-*.xml</span></tt></li>
+</ul>
+<p>For automatic tests choose Poll SCM in the Build Triggers section and enter <tt class="docutils literal"><span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span></tt></p>
+<p>Last but not least check the Publish Cobertura Coverage Report checkbox and add <tt class="docutils literal"><span class="pre">reports/coverage.xml</span></tt> as pattern.</p>
+<p>Now Jenkins will build your virtualenv and database, execute the unit tests, checks source code quality using pylint and
+generates code coverage reports every time you checkin some new code.</p>
+</div>
+<div class="section" id="deployment">
+<h3>4.1.3. Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h3>
+<p>We assume you want to deploy your Django project using the WSGI interface. Normally this can be a tedious and
+error-prone job so let Chuck do it for you!</p>
+<p>Chuck has got a module uwsgi to create a config xml named <tt class="docutils literal"><span class="pre">uwsgi.xml</span></tt> created and an app file called <tt class="docutils literal"><span class="pre">django_wsgi.py</span></tt>.
+Now all you have to do to deploy it on a <a class="reference external" href="http://projects.unbit.it/uwsgi/">uWSGI</a> server is</p>
+<div class="highlight-bash"><div class="highlight"><pre>uwsgi -x uwsgi/live/uwsgi.xml
 </pre></div>
+</div>
+<p>Assumed you used either the apache or nginx module to create your project you will find a corresponding directory in the
+projects hosting subdirectory to easily add your project as a virtual host to your webserver.</p>
+<p>If your project is running on a remote server it&#8217;s very likely that you want to update it after some time. If installed
+with the fabric module, Chuck created a fab file for you to connect via ssh, checkout the latest source branch
+(we use stage for testing and live for production environment), play in database updates, update static files and
+reload the webserver.</p>
+<p>Have a look at <tt class="docutils literal"><span class="pre">fabfile/__init__.py</span></tt> and at least change the user- and hostname for the ssh connection, but surely we also couldnt guess your remote directory structure so adjust them as well.
+Afterwards deployment is as easy as hitting a button. For example this will update your production environment:</p>
+<div class="highlight-bash"><div class="highlight"><pre>fab live deploy
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -192,8 +258,15 @@ Feel free to send an email to <a class="reference external" href="mailto:chuck&#
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">4. Available modules</a></li>
-<li><a class="reference internal" href="#additional-module-repositories">5. Additional module repositories</a></li>
+<li><a class="reference internal" href="#">4. Available modules</a><ul>
+<li><a class="reference internal" href="#a-few-words-about">4.1. A few words about...</a><ul>
+<li><a class="reference internal" href="#testing">4.1.1. Testing</a></li>
+<li><a class="reference internal" href="#continuous-integration">4.1.2. Continuous integration</a></li>
+<li><a class="reference internal" href="#deployment">4.1.3. Deployment</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
   <h4>Previous topic</h4>
@@ -241,7 +314,7 @@ Feel free to send an email to <a class="reference external" href="mailto:chuck&#
     </div>
     <div class="footer">
         &copy; Copyright 2012, Notch Interactive GmbH.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

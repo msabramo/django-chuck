@@ -53,89 +53,168 @@
             
   <div class="section" id="project-structure">
 <h1>3. Project structure<a class="headerlink" href="#project-structure" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="what-s-all-that-stuff">
-<h2>3.1. What&#8217;s all that stuff?!<a class="headerlink" href="#what-s-all-that-stuff" title="Permalink to this headline">¶</a></h2>
-<p>Django Chuck generates a whole lot stuff for you if you use the default core moduleset like uwsgi config files and a fab file for a smooth deployment process, requirement files to automatically install Python modules using pip, a chuck_setup.py file for easy project setup and a settings file plus shell script for plug and play Jenkins integration. This section will give you a brief overview about what jewels are included and how you can use them.</p>
-</div>
-<div class="section" id="requirements">
-<h2>3.2. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p>All project requirements are stored in the files under the requirements subdirectory.</p>
-<ul class="simple">
-<li>requirements.txt contains the requirements for all environments</li>
-<li>requirements_local.txt entries should only be installed on your workstation</li>
-<li>requirements_dev.txt stuff should be installed if you are a Django developer. It includes debugging and testing tools.</li>
-<li>requirements_live.txt takes all modules that are used to get your hosting up and running (e.g. the production database driver)</li>
-</ul>
-</div>
-<div class="section" id="settings-structure">
-<h2>3.3. Settings structure<a class="headerlink" href="#settings-structure" title="Permalink to this headline">¶</a></h2>
-<p>By default all normal settings like STATIC_ROOT, TEMPLATE_DIRS, MIDDLEWARE_CLASSES and INSTALLED_APPS are located in <tt class="docutils literal"><span class="pre">project/settings/common.py.</span></tt> All settings that are likely to be changed by you like ADMINS, LANGUAGE_CODE and INTERNAL_IPS can be found in <tt class="docutils literal"><span class="pre">custom.py</span></tt>.</p>
-<p>Additionally there are settings for development environment (<tt class="docutils literal"><span class="pre">dev.py</span></tt>), for a staging environment (<tt class="docutils literal"><span class="pre">stage.py</span></tt>) and for live aka production (<tt class="docutils literal"><span class="pre">live.py</span></tt>).</p>
-<p>If you included the unittest module you will also get a <tt class="docutils literal"><span class="pre">project/settings/test.py</span></tt> that can be used to easily setup your project in the continuous integration system <a class="reference external" href="http://www.jenkins-ci.org">Jenkins</a>.</p>
-</div>
-<div class="section" id="testing">
-<h2>3.4. Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
-<p>Django itself comes with a wonderful unit testing framework that Django Chuck extends with some sweet additional modules.</p>
+<p>This section covers the file generation when running with the built-in modules. A lot of muscle went into the process of
+figuring out a sensible and pragmatic default project structure that satisfies the needs of the most common use cases,
+so we advise you to give the built-ins a shot, even if they don&#8217;t cover your specific scenario right away. Remember,
+customizing is always easy once you understand what&#8217;s actually going on.</p>
+<div class="section" id="understanding-the-core-module">
+<h2>3.1. Understanding the core module<a class="headerlink" href="#understanding-the-core-module" title="Permalink to this headline">¶</a></h2>
+<p>The main structure for every project you create with Django Chuck is defined by the core module. It is by definition the
+entry point to every project you create. In fact, it defines (and has to define!) the very skeleton of every project
+you&#8217;re building with Chuck. It is also the only module that will <strong>always</strong> get installed with top priority. You can override
+the built-in core module by providing your own via <tt class="docutils literal"><span class="pre">module_basedirs</span></tt> in your config file.</p>
+<p>The built-in core module enforces the following structure:</p>
+<div class="section" id="the-root">
+<h3>3.1.1. The root<a class="headerlink" href="#the-root" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="41%" />
-<col width="59%" />
+<col width="29%" />
+<col width="71%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head">Module</th>
+<tr class="row-odd"><th class="head">Folder</th>
 <th class="head">Description</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><a class="reference external" href="http://django-test-utils.readthedocs.org">django-test-utils</a></td>
-<td>Let you run a test server that will automatically generate view tests while browsing the site</td>
+<tr class="row-even"><td><strong>db</strong></td>
+<td>This is the folder, where your dev SQLite database gets created when not providing other
+defaults through a module. The folder and its contents are by default excluded from version control.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference external" href="https://github.com/kmmbvnr/django-any">django-any</a></td>
-<td>Allows you to easily generate some random test data</td>
+<tr class="row-odd"><td><strong>&lt;project_name&gt;</strong></td>
+<td>This is the main project folder. Everything that is Django-related about your project should
+reside within this folder.</td>
 </tr>
-<tr class="row-even"><td><a class="reference external" href="http://www.logilab.org/project/pylint">pylint</a></td>
-<td>Checks your code quality for best practices and awful smells</td>
+<tr class="row-even"><td><strong>.gitignore</strong></td>
+<td>Speaks for itself, we guess. Contains some sensible defaults.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference external" href="http://pypi.python.org/pypi/django-jenkins">django-jenkins</a></td>
-<td>Plug and play continuous integration with Django and Jenkins</td>
+<tr class="row-odd"><td><strong>manage.py</strong></td>
+<td>Again, this should be clear to any Djangonaut.</td>
 </tr>
-<tr class="row-even"><td><a class="reference external" href="http://nedbatchelder.com/code/coverage/">coverage</a></td>
-<td>Calculatze the code coverage of your unit tests</td>
-</tr>
-<tr class="row-odd"><td><a class="reference external" href="http://pypi.python.org/pypi/mock/">mock</a></td>
-<td>A mocking library</td>
+<tr class="row-even"><td><strong>chuck_setup.py</strong></td>
+<td>This is the file that represents the Django Chuck project setup. Most important when using the
+the <tt class="docutils literal"><span class="pre">chuck</span> <span class="pre">setup_project</span></tt> command</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="continuous-integration">
-<h2>3.5. Continuous integration<a class="headerlink" href="#continuous-integration" title="Permalink to this headline">¶</a></h2>
-<p>To get Jenkins support you need to install both unittest and jenkins module!</p>
-<p>Additionally you will have to install the following Jenkins modules to get everything up and working:</p>
-<ul class="simple">
-<li>Cobertura Plugin</li>
-<li>Jenkins Violations plugin</li>
-</ul>
-<p>Chucks jenkins module will create a file <tt class="docutils literal"><span class="pre">jenkins/build_script.sh</span></tt> to use to build and test your project and generate code coverage reports.</p>
-<p>Create a new job in Jenkins, choose Free Style project, configure your source code management and use Shell execute as Build step. Click on Report violations and specify the full path to the generated script and in Post-build Actions add <tt class="docutils literal"><span class="pre">reports/pylint.report</span></tt> as pylint xml filename pattern. Click on the checkbox publish JUnit test result report and add <tt class="docutils literal"><span class="pre">reports/TEST-*.xml</span></tt></p>
-<p>For automatic tests choose Poll SCM in the Build Triggers section and enter <tt class="docutils literal"><span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span></tt></p>
-<p>Last but not least check the Publish Cobertura Coverage Report checkbox and add <tt class="docutils literal"><span class="pre">reports/coverage.xml</span></tt> as pattern.</p>
-<p>Now Jenkins will build your virtualenv and database, execute the unit tests, checks source code quality using pylint and generates code coverage reports every time you checkin some new code.</p>
+<div class="section" id="the-settings">
+<h3>3.1.2. The settings<a class="headerlink" href="#the-settings" title="Permalink to this headline">¶</a></h3>
+<p>By default all normal settings like <em>STATIC_ROOT</em>, <em>TEMPLATE_DIRS</em>, <em>MIDDLEWARE_CLASSES</em> and <em>INSTALLED_APPS</em> are located in
+<tt class="docutils literal"><span class="pre">project/settings/common.py.</span></tt> All settings that are likely to be changed after project creation like <em>ADMINS</em>, <em>LANGUAGE_CODE</em>
+and <em>INTERNAL_IPS</em> can be found in <tt class="docutils literal"><span class="pre">custom.py</span></tt>.
+Additionally there are settings for development environment (<tt class="docutils literal"><span class="pre">dev.py</span></tt>), for a staging environment (<tt class="docutils literal"><span class="pre">stage.py</span></tt>) and
+for live aka production (<tt class="docutils literal"><span class="pre">live.py</span></tt>).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you include the <tt class="docutils literal"><span class="pre">unittest</span></tt> module you will also get a <tt class="docutils literal"><span class="pre">project/settings/test.py</span></tt> that can be used to easily setup your project in the continuous integration system <a class="reference external" href="http://www.jenkins-ci.org">Jenkins</a>.</p>
 </div>
-<div class="section" id="deployment">
-<h2>3.6. Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h2>
-<p>Of course of want to deploy your Django project using the WSGI interface. Normally this can be an tedious and error-prone job so let Chuck do it for you!
-Chuck has got a module uwsgi to create a config xml named <tt class="docutils literal"><span class="pre">uwsgi.xml</span></tt> created and an app file called <tt class="docutils literal"><span class="pre">django_wsgi.py</span></tt>.
-Now all you have to do to deploy it on a <a class="reference external" href="http://projects.unbit.it/uwsgi/">uWSGI</a> server is</p>
-<div class="highlight-bash"><div class="highlight"><pre>uwsgi -x uwsgi/live/uwsgi.xml
-</pre></div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Folder</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>&lt;project_name&gt;/settings/</strong></td>
+<td>The settings folder</td>
+</tr>
+<tr class="row-odd"><td><strong>&lt;project_name&gt;/settings/__init__.py</strong></td>
+<td>This one&#8217;s clear, ain&#8217;t it.</td>
+</tr>
+<tr class="row-even"><td><strong>&lt;project_name&gt;/settings/common.py</strong></td>
+<td>This is the place where all the shared settings like <em>INSTALLED_APPS</em> go. Most likely to be extended in modules.</td>
+</tr>
+<tr class="row-odd"><td><strong>&lt;project_name&gt;/settings/custom.py</strong></td>
+<td>Gets imported by <em>common.py</em>. This is the place for storing settings that are
+likely to change, like <em>INTERNAL_IPS</em>, <em>ADMINS</em> and so on</td>
+</tr>
+<tr class="row-even"><td><strong>&lt;project_name&gt;/settings/dev.py</strong></td>
+<td>This is the file that represents all the needs of your development environment.
+By default, this file gets exported as <em>DJANGO_SETTINGS_MODULE</em> in your virtualenv. This can be changed via config file.
+Imports * from <em>common.py</em></td>
+</tr>
+<tr class="row-odd"><td><strong>&lt;project_name&gt;/settings/live.py</strong></td>
+<td>This is meant to represent any settings specific to your production environment.
+Imports * from <em>common.py</em></td>
+</tr>
+<tr class="row-even"><td><strong>&lt;project_name&gt;/settings/stage.py</strong></td>
+<td>This is meant to represent any settings specific to your staging or integration environment.
+Imports * from <em>common.py</em></td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>Assumed you used either apache or nginx module to create your project you will find a corresponding directory in the hosting subdirectory to easily add your project as a virtual host to your webserver.</p>
-<p>If your project is running on a remote server it&#8217;s very likely that you want to update it after some time. Chuck created a fab file for you to connect via ssh, checkout the latest source branch (we use stage for testing and live for production environment), play in database updates, update static files and reload the webserver.</p>
-<p>Have a look at <tt class="docutils literal"><span class="pre">fabfile/__init__.py</span></tt> and at least change the user- and hostname for the ssh connection, but surely we also couldnt guess your remote directory structure so adjust them as well.
-Afterwards deployment is as easy as hitting a button. For example this will update your production environment:</p>
-<div class="highlight-bash"><div class="highlight"><pre>fab live deploy
-</pre></div>
+<div class="section" id="the-templates">
+<h3>3.1.3. The templates<a class="headerlink" href="#the-templates" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Folder</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>templates</strong></td>
+<td>The template folder.</td>
+</tr>
+<tr class="row-odd"><td><strong>templates/404.html</strong></td>
+<td>A simple default 404 page that gets displayed whenever such an error occurs.</td>
+</tr>
+<tr class="row-even"><td><strong>templates/500.html</strong></td>
+<td>A simple default 500 page that gets displayed whenever such an error occurs.</td>
+</tr>
+<tr class="row-odd"><td><strong>templates/base.html</strong></td>
+<td>Should be the base for every HTML response except the error pages. Defines the very basic structural
+elements like the doctype, the heading and the body.</td>
+</tr>
+<tr class="row-even"><td><strong>templates/site_base.html</strong></td>
+<td>Extends <em>base.html</em> and defines meta information, global style and script directives and so on.</td>
+</tr>
+<tr class="row-odd"><td><strong>templates/subsite.html</strong></td>
+<td>Extends <em>site_base.html</em>, example for an actual template.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-requirements">
+<h3>3.1.4. The requirements<a class="headerlink" href="#the-requirements" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="72%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Folder</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>requirements/</strong></td>
+<td>The requirements folder.</td>
+</tr>
+<tr class="row-odd"><td><strong>requirements/requirements.txt</strong></td>
+<td>Contains the requirements for all environments.</td>
+</tr>
+<tr class="row-even"><td><strong>requirements/requirements_local.txt</strong></td>
+<td>Entries should only be installed on your workstation.</td>
+</tr>
+<tr class="row-odd"><td><strong>requirements/requirements_dev.txt</strong></td>
+<td>This entries should get installed if you are a Django developer. This is the place where
+debugging and testing tools&#8217; requirements go.</td>
+</tr>
+<tr class="row-even"><td><strong>requirements/requirements_live.txt</strong></td>
+<td>Takes all requirements that are used to get your hosting up and running (e.g. the production database driver).</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -149,12 +228,13 @@ Afterwards deployment is as easy as hitting a button. For example this will upda
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">3. Project structure</a><ul>
-<li><a class="reference internal" href="#what-s-all-that-stuff">3.1. What&#8217;s all that stuff?!</a></li>
-<li><a class="reference internal" href="#requirements">3.2. Requirements</a></li>
-<li><a class="reference internal" href="#settings-structure">3.3. Settings structure</a></li>
-<li><a class="reference internal" href="#testing">3.4. Testing</a></li>
-<li><a class="reference internal" href="#continuous-integration">3.5. Continuous integration</a></li>
-<li><a class="reference internal" href="#deployment">3.6. Deployment</a></li>
+<li><a class="reference internal" href="#understanding-the-core-module">3.1. Understanding the core module</a><ul>
+<li><a class="reference internal" href="#the-root">3.1.1. The root</a></li>
+<li><a class="reference internal" href="#the-settings">3.1.2. The settings</a></li>
+<li><a class="reference internal" href="#the-templates">3.1.3. The templates</a></li>
+<li><a class="reference internal" href="#the-requirements">3.1.4. The requirements</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -204,7 +284,7 @@ Afterwards deployment is as easy as hitting a button. For example this will upda
     </div>
     <div class="footer">
         &copy; Copyright 2012, Notch Interactive GmbH.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

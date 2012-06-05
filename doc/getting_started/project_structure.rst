@@ -2,89 +2,90 @@
 Project structure
 ##################
 
-What's all that stuff?!
-=======================
+This section covers the file generation when running with the built-in modules. A lot of muscle went into the process of
+figuring out a sensible and pragmatic default project structure that satisfies the needs of the most common use cases,
+so we advise you to give the built-ins a shot, even if they don't cover your specific scenario right away. Remember,
+customizing is always easy once you understand what's actually going on.
 
-Django Chuck generates a whole lot stuff for you if you use the default core moduleset like uwsgi config files and a fab file for a smooth deployment process, requirement files to automatically install Python modules using pip, a chuck_setup.py file for easy project setup and a settings file plus shell script for plug and play Jenkins integration. This section will give you a brief overview about what jewels are included and how you can use them.
+Understanding the core module
+=============================
 
+The main structure for every project you create with Django Chuck is defined by the core module. It is by definition the
+entry point to every project you create. In fact, it defines (and has to define!) the very skeleton of every project
+you're building with Chuck. It is also the only module that will **always** get installed with top priority. You can override
+the built-in core module by providing your own via ``module_basedirs`` in your config file.
 
-Requirements
-============
+The built-in core module enforces the following structure:
 
-All project requirements are stored in the files under the requirements subdirectory.
+The root
+--------
 
-* requirements.txt contains the requirements for all environments
-* requirements_local.txt entries should only be installed on your workstation
-* requirements_dev.txt stuff should be installed if you are a Django developer. It includes debugging and testing tools.
-* requirements_live.txt takes all modules that are used to get your hosting up and running (e.g. the production database driver)
+=========================================== ==========================================================================================================
+Folder                                      Description
+=========================================== ==========================================================================================================
+**db**                                      This is the folder, where your dev SQLite database gets created when not providing other
+                                            defaults through a module. The folder and its contents are by default excluded from version control.
+**<project_name>**                          This is the main project folder. Everything that is Django-related about your project should
+                                            reside within this folder.
+**.gitignore**                              Speaks for itself, we guess. Contains some sensible defaults.
+**manage.py**                               Again, this should be clear to any Djangonaut.
+**chuck_setup.py**                          This is the file that represents the Django Chuck project setup. Most important when using the
+                                            the ``chuck setup_project`` command
+=========================================== ==========================================================================================================
 
+The settings
+------------
 
-Settings structure
-==================
+By default all normal settings like *STATIC_ROOT*, *TEMPLATE_DIRS*, *MIDDLEWARE_CLASSES* and *INSTALLED_APPS* are located in
+``project/settings/common.py.`` All settings that are likely to be changed after project creation like *ADMINS*, *LANGUAGE_CODE*
+and *INTERNAL_IPS* can be found in ``custom.py``.
+Additionally there are settings for development environment (``dev.py``), for a staging environment (``stage.py``) and
+for live aka production (``live.py``).
 
-By default all normal settings like STATIC_ROOT, TEMPLATE_DIRS, MIDDLEWARE_CLASSES and INSTALLED_APPS are located in ``project/settings/common.py.`` All settings that are likely to be changed by you like ADMINS, LANGUAGE_CODE and INTERNAL_IPS can be found in ``custom.py``.
+.. note::
+   If you include the ``unittest`` module you will also get a ``project/settings/test.py`` that can be used to easily setup your project in the continuous integration system `Jenkins <http://www.jenkins-ci.org>`_.
 
-Additionally there are settings for development environment (``dev.py``), for a staging environment (``stage.py``) and for live aka production (``live.py``).
+=========================================== ==========================================================================================================
+Folder                                      Description
+=========================================== ==========================================================================================================
+**<project_name>/settings/**                The settings folder
+**<project_name>/settings/__init__.py**     This one's clear, ain't it.
+**<project_name>/settings/common.py**       This is the place where all the shared settings like *INSTALLED_APPS* go. Most likely to be extended in modules.
+**<project_name>/settings/custom.py**       Gets imported by *common.py*. This is the place for storing settings that are
+                                            likely to change, like *INTERNAL_IPS*, *ADMINS* and so on
+**<project_name>/settings/dev.py**          This is the file that represents all the needs of your development environment.
+                                            By default, this file gets exported as *DJANGO_SETTINGS_MODULE* in your virtualenv. This can be changed via config file.
+                                            Imports * from *common.py*
+**<project_name>/settings/live.py**         This is meant to represent any settings specific to your production environment.
+                                            Imports * from *common.py*
+**<project_name>/settings/stage.py**        This is meant to represent any settings specific to your staging or integration environment.
+                                            Imports * from *common.py*
+=========================================== ==========================================================================================================
 
-If you included the unittest module you will also get a ``project/settings/test.py`` that can be used to easily setup your project in the continuous integration system `Jenkins <http://www.jenkins-ci.org>`_.
+The templates
+-------------
 
+=========================================== ==========================================================================================================
+Folder                                      Description
+=========================================== ==========================================================================================================
+**templates**                               The template folder.
+**templates/404.html**                      A simple default 404 page that gets displayed whenever such an error occurs.
+**templates/500.html**                      A simple default 500 page that gets displayed whenever such an error occurs.
+**templates/base.html**                     Should be the base for every HTML response except the error pages. Defines the very basic structural
+                                            elements like the doctype, the heading and the body.
+**templates/site_base.html**                Extends *base.html* and defines meta information, global style and script directives and so on.
+**templates/subsite.html**                  Extends *site_base.html*, example for an actual template.
+=========================================== ==========================================================================================================
 
-Testing
-========
-
-Django itself comes with a wonderful unit testing framework that Django Chuck extends with some sweet additional modules.
-
-================================================================ ================
-Module                                                           Description
-================================================================ ================
-`django-test-utils <http://django-test-utils.readthedocs.org>`_  Let you run a test server that will automatically generate view tests while browsing the site
-`django-any <https://github.com/kmmbvnr/django-any>`_            Allows you to easily generate some random test data
-`pylint <http://www.logilab.org/project/pylint>`_                Checks your code quality for best practices and awful smells
-`django-jenkins <http://pypi.python.org/pypi/django-jenkins>`_   Plug and play continuous integration with Django and Jenkins
-`coverage <http://nedbatchelder.com/code/coverage/>`_            Calculatze the code coverage of your unit tests
-`mock <http://pypi.python.org/pypi/mock/>`_                      A mocking library
-================================================================ ================
-
-
-Continuous integration
-======================
-
-To get Jenkins support you need to install both unittest and jenkins module!
-
-Additionally you will have to install the following Jenkins modules to get everything up and working:
-
-* Cobertura Plugin
-* Jenkins Violations plugin
-
-Chucks jenkins module will create a file ``jenkins/build_script.sh`` to use to build and test your project and generate code coverage reports.
-
-Create a new job in Jenkins, choose Free Style project, configure your source code management and use Shell execute as Build step. Click on Report violations and specify the full path to the generated script and in Post-build Actions add ``reports/pylint.report`` as pylint xml filename pattern. Click on the checkbox publish JUnit test result report and add ``reports/TEST-*.xml``
-
-For automatic tests choose Poll SCM in the Build Triggers section and enter ``* * * * *``
-
-Last but not least check the Publish Cobertura Coverage Report checkbox and add ``reports/coverage.xml`` as pattern.
-
-Now Jenkins will build your virtualenv and database, execute the unit tests, checks source code quality using pylint and generates code coverage reports every time you checkin some new code.
-
-
-Deployment
-==========
-
-Of course of want to deploy your Django project using the WSGI interface. Normally this can be an tedious and error-prone job so let Chuck do it for you!
-Chuck has got a module uwsgi to create a config xml named ``uwsgi.xml`` created and an app file called ``django_wsgi.py``.
-Now all you have to do to deploy it on a `uWSGI <http://projects.unbit.it/uwsgi/>`_ server is
-
-.. code-block:: bash
-
-  uwsgi -x uwsgi/live/uwsgi.xml
-
-Assumed you used either apache or nginx module to create your project you will find a corresponding directory in the hosting subdirectory to easily add your project as a virtual host to your webserver.
-
-If your project is running on a remote server it's very likely that you want to update it after some time. Chuck created a fab file for you to connect via ssh, checkout the latest source branch (we use stage for testing and live for production environment), play in database updates, update static files and reload the webserver.
-
-Have a look at ``fabfile/__init__.py`` and at least change the user- and hostname for the ssh connection, but surely we also couldnt guess your remote directory structure so adjust them as well.
-Afterwards deployment is as easy as hitting a button. For example this will update your production environment:
-
-.. code-block:: bash
-
-  fab live deploy
+The requirements
+----------------
+=========================================== ==========================================================================================================
+Folder                                      Description
+=========================================== ==========================================================================================================
+**requirements/**                           The requirements folder.
+**requirements/requirements.txt**           Contains the requirements for all environments.
+**requirements/requirements_local.txt**     Entries should only be installed on your workstation.
+**requirements/requirements_dev.txt**       This entries should get installed if you are a Django developer. This is the place where
+                                            debugging and testing tools' requirements go.
+**requirements/requirements_live.txt**      Takes all requirements that are used to get your hosting up and running (e.g. the production database driver).
+=========================================== ==========================================================================================================

@@ -9,7 +9,7 @@ project_basedir="~/work/projects"
 module_basedirs = ["."]
 
 # comma seperated list of modules that always should be installed
-default_modules=["core"]
+default_modules=["core", "south"]
 
 # comma seperated list of app that should additionally get installed
 #default_additional_apps = ["south"]

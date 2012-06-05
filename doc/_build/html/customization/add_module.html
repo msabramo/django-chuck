@@ -114,9 +114,10 @@ Here&#8217;s a small example to delete a setting file if it exists.</p>
 </pre></div>
 </div>
 <p>The file <tt class="docutils literal"><span class="pre">chuck_module.py</span></tt> gets the same variables and functions injected as <a class="reference internal" href="chuck_setup.html"><em>chuck_setup.py</em></a> with one exception it additionally get a list called <tt class="docutils literal"><span class="pre">installed_modules</span></tt> which of course is a list of all successfully installed modules.</p>
-<div class="highlight-python"><pre>def post_build():
-    if "cms" in installed_modules:
-        # do some fancy stuff</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">post_build</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s">&quot;cms&quot;</span> <span class="ow">in</span> <span class="n">installed_modules</span><span class="p">:</span>
+        <span class="c"># do some fancy stuff</span>
+</pre></div>
 </div>
 </div>
 
@@ -178,7 +179,7 @@ Here&#8217;s a small example to delete a setting file if it exists.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2012, Notch Interactive GmbH.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

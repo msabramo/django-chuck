@@ -82,43 +82,44 @@
 </table>
 <p>You want to do some cleanup after a system failure or user interruption? Just implement the method <tt class="docutils literal"><span class="pre">signal_handler</span></tt> and do what ever you want to do. By default the project- and virtualenv directory will get erased automatically if the user doesnt set <tt class="docutils literal"><span class="pre">delete_project_on_failure</span></tt> to <tt class="docutils literal"><span class="pre">False</span></tt> in the config file.</p>
 <p>Here is a complete example:</p>
-<div class="highlight-python"><pre>import os
-from django_chuck.commands.base import BaseCommand
-from django_chuck.commands import sync_database, migrate_database
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">django_chuck.commands.base</span> <span class="kn">import</span> <span class="n">BaseCommand</span>
+<span class="kn">from</span> <span class="nn">django_chuck.commands</span> <span class="kn">import</span> <span class="n">sync_database</span><span class="p">,</span> <span class="n">migrate_database</span>
 
-class Command(BaseCommand):
-    help = "Sync, migrate database and load fixtures"
+<span class="k">class</span> <span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s">&quot;Sync, migrate database and load fixtures&quot;</span>
 
-    def __init__(self):
-        super(Command, self).__init__()
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Command</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
-        self.opts.append(("fixture_files", {
-            "help": "Comma separated list of fixture files to load",
-            "nargs": "?",
-        }))
+        <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s">&quot;fixture_files&quot;</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s">&quot;help&quot;</span><span class="p">:</span> <span class="s">&quot;Comma separated list of fixture files to load&quot;</span><span class="p">,</span>
+            <span class="s">&quot;nargs&quot;</span><span class="p">:</span> <span class="s">&quot;?&quot;</span><span class="p">,</span>
+        <span class="p">}))</span>
 
-        self.opts.append(("my_dir", {
-            "help": "My work dir to do something in there",
-            "nargs": "?",
-        }))
-
-
-  def signal_handler(self):
-      if os.path.exists(self.my_dir):
-          print "Deleting directory " + self.my_dir
-          shutil.rmtree(self.my_dir)
+        <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s">&quot;my_dir&quot;</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s">&quot;help&quot;</span><span class="p">:</span> <span class="s">&quot;My work dir to do something in there&quot;</span><span class="p">,</span>
+            <span class="s">&quot;nargs&quot;</span><span class="p">:</span> <span class="s">&quot;?&quot;</span><span class="p">,</span>
+        <span class="p">}))</span>
 
 
-    def handle(self, args, cfg):
-        super(Command, self).handle(args, cfg)
+  <span class="k">def</span> <span class="nf">signal_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_dir</span><span class="p">):</span>
+          <span class="k">print</span> <span class="s">&quot;Deleting directory &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_dir</span>
+          <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_dir</span><span class="p">)</span>
 
-        sync_database.Command().handle(args, cfg)
-        migrate_database.Command().handle(args, cfg)
 
-        if self.fixture_files:
-            for fixture_file in self.fixture_files.split(","):
-                self.db_cleanup()
-                self.load_fixtures(os.path.join(self.site_dir, "fixtures", fixture_file))</pre>
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cfg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Command</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
+
+        <span class="n">sync_database</span><span class="o">.</span><span class="n">Command</span><span class="p">()</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
+        <span class="n">migrate_database</span><span class="o">.</span><span class="n">Command</span><span class="p">()</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixture_files</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">fixture_file</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixture_files</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">db_cleanup</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">load_fixtures</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">site_dir</span><span class="p">,</span> <span class="s">&quot;fixtures&quot;</span><span class="p">,</span> <span class="n">fixture_file</span><span class="p">))</span>
+</pre></div>
 </div>
 </div>
 
@@ -173,7 +174,7 @@ class Command(BaseCommand):
     </div>
     <div class="footer">
         &copy; Copyright 2012, Notch Interactive GmbH.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

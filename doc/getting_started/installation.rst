@@ -18,27 +18,35 @@ Recommended
 Installation per pip
 ====================
 
-* pip install django-chuck
-* Copy example_conf.py (on Linux /usr/share/django_chuck/example_conf.py, on Mac OS X ``/opt/local/Library/Frameworks/Python.framework/Versions/2.7/share/django-chuck/example_conf.py`` if you installed Python via MacPorts otherwise in ``/System/Library/Frameworks/Python.framework/Versions/2.7./share/django-chuck/example_conf.py``) to ~/django_chuck_conf.py
-* Edit ~/django_chuck_conf.py
+* ``pip install django-chuck``
 
 
 Installation via source code
 ============================
 
-* git clone http://www.github.com/notchinteractive/django-chuck.git
-* cd django-chuck
-* python setup.py install
-* copy example_conf.py to ~/django_chuck_conf.py
-* Edit ~/django_chuck_conf.py
 
+* ``git clone http://www.github.com/notchinteractive/django-chuck.git``
+* ``cd django-chuck``
+* ``python setup.py install``
 
 Configuration
 =============
 
-Your config file is just a normal Python file so you need to follow the Python syntax, use Python datatypes and you can even dynamically generate the config using functions, external modules, database settings or whatever you like. The config get's loaded like a normal Python module.
+Locate the ``example_conf.py`` file on your computer:
 
-Here's a brief describtion of the default settings you can configure.
+* on Linux: ``/usr/share/django_chuck/example_conf.py``
+* on Mac OS X: ``/System/Library/Frameworks/Python.framework/Versions/2.7./share/django-chuck/example_conf.py``
+* on Mac OS X with a MacPorts Python version: ``/opt/local/Library/Frameworks/Python.framework/Versions/2.7/share/django-chuck/example_conf.py``
+
+Copy the file to your home directory and name it ``django_chuck_conf.py``:
+
+* ``~/django_chuck_conf.py``
+
+Your config file is just a normal Python file so you need to follow the Python syntax, use Python datatypes and you
+can even dynamically generate the config using functions, external modules, database settings or whatever you like.
+The config get's loaded like a normal Python module.
+
+Here's a brief description of the default settings you can configure.
 
 ======================== ===============================
 setting                  description
@@ -73,7 +81,7 @@ This parameter can be set by using module_basedir in the config file.
 Module aliases
 ==============
 
-You have some sets of modules that you want to install quite often and you dont want to type the list of modules over and over again?
+You have some sets of modules that you want to install quite often and you don't want to type the list of modules over and over again?
 No problem. Just give your module list an alias name and install that instead.
 
 .. code-block:: python
@@ -82,4 +90,5 @@ No problem. Just give your module list an alias name and install that instead.
       "test": ["unittest", "jenkins"]
   }
 
-Now everytime you specify to install module test in reality unittest and jenkins will get installed.
+Now every time you specify the alias ``test`` in either the command line call or a config parameter,
+the modules ``unittest`` and ``jenkins`` will get installed.

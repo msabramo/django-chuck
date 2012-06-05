@@ -55,20 +55,22 @@
 <h1>2. Basic commands<a class="headerlink" href="#basic-commands" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="build-a-new-project">
 <h2>2.1. Build a new project<a class="headerlink" href="#build-a-new-project" title="Permalink to this headline">¶</a></h2>
-<p>To create a project you need to specify a project prefix (e.g. customer), a project name and optionally modules to include in your project.
-For example you the following command will build a django-cms project with a contact app:</p>
-<div class="highlight-bash"><div class="highlight"><pre>chuck create_project &lt;project_prefix&gt; &lt;project_name&gt; contact,cms
+<p>To create a project you need to specify a project prefix (e.g. customer), a project name and optionally modules to
+include in your project.</p>
+<p>Example:
+The following command will build a django-cms project with unittest and jenkins support:</p>
+<div class="highlight-bash"><div class="highlight"><pre>chuck create_project &lt;project_prefix&gt; &lt;project_name&gt; django-cms,unittest,jenkins
 </pre></div>
 </div>
 <p>You can also add other Python module with a version number like for using pip</p>
-<div class="highlight-bash"><div class="highlight"><pre>chuck create_project &lt;project_prefix&gt; &lt;project_name&gt; cms -a <span class="nv">Django</span><span class="o">==</span>1.4
+<div class="highlight-bash"><div class="highlight"><pre>chuck create_project &lt;project_prefix&gt; &lt;project_name&gt; unittest,jenkins -a django-social-auth<span class="o">==</span>0.6.9
 </pre></div>
 </div>
 </div>
 <div class="section" id="setup-an-existing-project">
 <h2>2.2. Setup an existing project<a class="headerlink" href="#setup-an-existing-project" title="Permalink to this headline">¶</a></h2>
-<p>At some time in your development process you have got a project in your version control system and another developer wants to setup his or her development environment.
-This normally includes the following steps:</p>
+<p>At some time in your development process you have got a project in your version control system and another developer
+wants to setup his or her development environment. This normally includes the following steps:</p>
 <ul class="simple">
 <li>Checkout the source</li>
 <li>Create virtualenv</li>
@@ -76,15 +78,19 @@ This normally includes the following steps:</p>
 <li>Setup the database</li>
 <li>Optionally load some fixtures or other test data</li>
 </ul>
-<p>After doing these steps five or tens times it get&#8217;s annoying so let Chuck do it for you!</p>
-<div class="highlight-bash"><div class="highlight"><pre>chuck setup_project &lt;url&gt;
+<p>After doing these steps five or tens times it gets annoying, so why don&#8217;t you let Chuck do the job?</p>
+<div class="highlight-bash"><div class="highlight"><pre>chuck setup_project &lt;url_to_repo&gt;
 </pre></div>
 </div>
-<p>for example if you use a Git repository you execute</p>
+<p>For example if you use a Git repository you simply execute the following:</p>
 <div class="highlight-bash"><div class="highlight"><pre>chuck setup_project git://github.com/notch-interactive/django-chuck
 </pre></div>
 </div>
-<p>If your project wasnt created by Chuck and doesnt contain a <tt class="docutils literal"><span class="pre">chuck_setup.py</span></tt> file Chuck will ask you everything he needs to know to get everything up and running.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As for now, this process is only supported for projects which got created through Django Chuck or contain a
+valid <tt class="docutils literal"><span class="pre">chuck_setup.py</span></tt> file. We plan to make this work on non-Chuck projects in the near future though.</p>
+</div>
 </div>
 </div>
 
@@ -148,7 +154,7 @@ This normally includes the following steps:</p>
     </div>
     <div class="footer">
         &copy; Copyright 2012, Notch Interactive GmbH.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
