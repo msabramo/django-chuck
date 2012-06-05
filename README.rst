@@ -68,3 +68,5 @@ For more commands ands information see::
 
     chuck -h
     chuck <command> -h
+
+and http://django-chuck.readthedocs.org
