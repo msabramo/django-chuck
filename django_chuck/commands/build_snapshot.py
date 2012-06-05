@@ -47,6 +47,7 @@ class Command(BaseCommand):
 
 
     def replace_requirement_file(self, file):
+        print "Updating " + file
         f = open(file, 'w+')
         f.truncate()
         s = '\n'.join(['%s%s'% (app_name, self.requirements[app_name]) for app_name in self.requirements])

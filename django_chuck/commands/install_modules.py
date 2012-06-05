@@ -29,7 +29,7 @@ class Command(BaseCommand):
             "nargs": "?",
         }))
 
-    def install_module(self, module_name, as_dependency=False):
+    def install_module(self, module_name):
         module = self.module_cache.get(module_name, None)
 
         # Module has post build action? Remember it
@@ -39,12 +39,7 @@ class Command(BaseCommand):
             if module.post_build:
                 self.post_build_actions.append((module.name, module.post_build))
 
-        if as_dependency:
-            self.print_header("INSTALLING " + module.name + " AS DEPENDENCY")
-        else:
-            self.print_header("BUILDING " + module.name)
-
-
+        self.print_header("BUILDING " + module.name)
         self.installed_modules.append(module)
 
         # For each file in the module dir
@@ -72,6 +67,7 @@ class Command(BaseCommand):
             append_to_file(os.path.join(self.project_dir, "settings", "common.py"), "\nSECRET_KEY = '" + secret_key + "'\n")
 
         self.installed_modules.append(module.name)
+
 
     def handle(self, args, cfg):
         super(Command, self).handle(args, cfg)

@@ -242,7 +242,7 @@ class BaseCommand(object):
                     errors.append("Module %s could not be found." % module_name)
                 elif module.dependencies:
                     for module_name in module.dependencies:
-                        if not module_name in module_list:
+                        if not module_name in module_list and not module_name in to_append:
                             to_append.append(module_name)
             return to_append
 
@@ -268,7 +268,6 @@ class BaseCommand(object):
             self.kill_system()
 
         # Order by priority
-
         module_list = sorted(module_list, key=lambda module: module_cache.get(module).priority)
         return module_list
 
