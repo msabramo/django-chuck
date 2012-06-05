@@ -1,3 +1,5 @@
+depends = ["pil"]
+
 description = """
 Adds Django Imagekit support to your project
 
