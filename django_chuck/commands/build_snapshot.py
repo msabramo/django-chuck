@@ -15,8 +15,6 @@ class Command(BaseCommand):
         self.print_header("BUILD SNAPSHOT")
         output = self.execute_in_project('pip freeze', return_result=True).split('\n')
 
-        import pudb; pudb.set_trace()
-
         self.requirements = {}
         for line in output:
             if line == '':
