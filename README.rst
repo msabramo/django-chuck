@@ -48,9 +48,9 @@ Installation
 
 * Copy the example.conf to your home dir (~/.django_chuck.conf), edit it
   and at least have a look at the following files:
-.. code-block:: python
-   ``modules/core/project/settings/custom.py``
-   ``modules/core/fabfile/__init__.py``
+  .. code-block:: python
+       ``modules/core/project/settings/custom.py``
+       ``modules/core/fabfile/__init__.py``
 
 
 How to use it
