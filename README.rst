@@ -46,7 +46,7 @@ Installation
 * You need Python 2.5 or higher, pip and virtualenv. Virtualenvwrapper is
   also supported.
 
-* Copy the example.conf to your home dir (~/.django_chuck.conf), edit it
+* Copy the example.conf to your home dir (~/.django_chuck_conf.py), edit it
   and at least have a look at the following files:
 
 .. code-block:: python
@@ -57,20 +57,39 @@ Installation
 How to use it
 -------------
 
+List all available modules
+
+.. code-block:: bash
+
+  chuck list_modules
+
+Show information about a module
+
+.. code-block:: bash
+
+  chuck show_info <module_name>
+
 Create a new project with django-tastypie, html5lib and jquery support
 
-cd dir-of-django-chuck
-chuck create_project test project django-tastypie,html5lib,jquery
+.. code-block:: bash
+
+  chuck create_project test project django-tastypie,html5lib,jquery
+
+Setup an existing project with virtualenv and db
 
 .. code-block:: python
-   # Setup an existing project with virtualenv and db
+
    chuck setup_project <[cvs|svn|git|hg]-url>
 
-.. code-block:: python
-   # Rebuild your database and load some fixtures
-   chuck rebuild_database test project /path/to/fixture/file.json
+Rebuild your database and load some fixtures
 
 .. code-block:: python
-   # For more commands ands information see
+
+   chuck rebuild_database test project /path/to/fixture/file.json
+
+For more commands ands information see
+
+.. code-block:: python
+
    chuck -h
    chuck <command> -h
